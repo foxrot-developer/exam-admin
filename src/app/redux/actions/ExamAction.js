@@ -43,7 +43,13 @@ export const getFreeExam = (lang) => (dispatch) => {
                 payload: res.data.questions,
             })
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+            console.log(err)
+            dispatch({
+                type: GET_QUESTION,
+                payload: [],
+            })
+        })
 }
 
 export const updateFreeExam = (exam, id, setEditMode, lang) => (dispatch) => {
@@ -89,7 +95,12 @@ export const getPaidExam = (lang) => (dispatch) => {
                 payload: res.data.paid_exams,
             })
         })
-        .catch((err) => console.log(err))
+        .catch((err) =>
+            dispatch({
+                type: GET_PAID_EXAM,
+                payload: [],
+            })
+        )
 }
 
 export const updatePaidExam = (id, exam, setEditMode, lang) => (dispatch) => {
@@ -155,7 +166,12 @@ export const getPaidExamQuestion = (id, lang) => (dispatch) => {
                 payload: res.data.exam_details,
             })
         })
-        .catch((err) => console.log(err))
+        .catch((err) =>
+            dispatch({
+                type: GET_QUESTION,
+                payload: [],
+            })
+        )
 }
 
 export const getPaidQuestion = (lang) => (dispatch) => {
@@ -172,7 +188,12 @@ export const getPaidQuestion = (lang) => (dispatch) => {
                 payload: res.data.paid_questions,
             })
         })
-        .catch((err) => console.log(err))
+        .catch((err) =>
+            dispatch({
+                type: GET_QUESTION,
+                payload: [],
+            })
+        )
 }
 
 export const updatePaidQuestion =
@@ -197,9 +218,13 @@ export const deletePaidQuestion = (id, lang) => (dispatch) => {
 
 export const GET_EXAM_RESULT = 'GET_EXAM_RESULT'
 
-export const getAllPaidExamResult = () => (dispatch) => {
+export const getAllPaidExamResult = (lang) => (dispatch) => {
     axiosInstance
-        .get('paid-exam/all-exam-results')
+        .get('paid-exam/all-exam-results', {
+            headers: {
+                lang: lang,
+            },
+        })
         .then((res) => {
             console.log(res.data)
             dispatch({
@@ -207,5 +232,10 @@ export const getAllPaidExamResult = () => (dispatch) => {
                 payload: res.data.results,
             })
         })
-        .catch((err) => console.log(err))
+        .catch((err) =>
+            dispatch({
+                type: GET_EXAM_RESULT,
+                payload: [],
+            })
+        )
 }

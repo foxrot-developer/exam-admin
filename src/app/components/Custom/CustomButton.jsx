@@ -12,6 +12,7 @@ const CustomButton = ({ eventHandler, title }) => {
                 boxShadow: '3px 3px 10px #EEBC1D',
                 marginBottom: '10px',
                 alignSelf: 'flex-end',
+                marginLeft: '10px',
             }}
         >
             {title}
