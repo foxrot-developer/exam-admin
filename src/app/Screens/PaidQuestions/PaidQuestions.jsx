@@ -602,7 +602,22 @@ const PaidQuestion = () => {
                                     paddingLeft: '30px',
                                     paddingRight: '30px',
                                 }}
-                                disabled={language.isNetherlands ? false : true}
+                                disabled={
+                                    question.question === '' &&
+                                    question.question_ar === '' &&
+                                    question.question_nl === '' &&
+                                    question.options.length === 0 &&
+                                    question.options_ar.length === 0 &&
+                                    question.options_nl.length === 0 &&
+                                    question.answer === '' &&
+                                    question.answer_ar === '' &&
+                                    question.answer_nl === '' &&
+                                    question.part === '' &&
+                                    question.part_ar === '' &&
+                                    question.part_nl === ''
+                                        ? false
+                                        : true
+                                }
                             >
                                 Create
                             </Button>
@@ -629,6 +644,7 @@ const PaidQuestion = () => {
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         label="Language"
+                        value={lang}
                         onChange={(e) => {
                             setLang(e.target.value)
                             dispatch(getPaidQuestion(e.target.value))
@@ -636,7 +652,7 @@ const PaidQuestion = () => {
                         required
                     >
                         <MenuItem value={'en'}>English</MenuItem>
-                        <MenuItem value={'ar'}>Arbic</MenuItem>
+                        <MenuItem value={'ar'}>Arabic</MenuItem>
                         <MenuItem value={'nl'}>Netherland</MenuItem>
                     </Select>
                 </FormControl>

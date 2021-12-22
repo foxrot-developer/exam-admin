@@ -562,7 +562,27 @@ const Subscription = () => {
                         <Button
                             onClick={onCreateHandler}
                             variant="contained"
-                            disabled={language.isNetherlands ? false : true}
+                            disabled={
+                                packages.package_name === '' &&
+                                packages.price === '' &&
+                                packages.description.length === 0 &&
+                                packages.duration === '' &&
+                                packages.no_exam === '' &&
+                                packages.repeat === '' &&
+                                packages.langs.length === 0 &&
+                                packages.package_name_ar === '' &&
+                                packages.price_ar === '' &&
+                                packages.description_ar.length === 0 &&
+                                packages.duration_ar === '' &&
+                                packages.langs_ar.length === 0 &&
+                                packages.package_name_nl === '' &&
+                                packages.price_nl === '' &&
+                                packages.description_nl.length === 0 &&
+                                packages.duration_nl === '' &&
+                                packages.langs_nl.length === 0
+                                    ? false
+                                    : true
+                            }
                             style={{
                                 backgroundColor: '#EEBC1D',
                                 fontWeight: '600',
@@ -594,6 +614,7 @@ const Subscription = () => {
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         label="Language"
+                        value={lang}
                         onChange={(e) => {
                             setLang(e.target.value)
                             dispatch(getPackageList(e.target.value))
@@ -601,7 +622,7 @@ const Subscription = () => {
                         required
                     >
                         <MenuItem value={'en'}>English</MenuItem>
-                        <MenuItem value={'ar'}>Arbic</MenuItem>
+                        <MenuItem value={'ar'}>Arabic</MenuItem>
                         <MenuItem value={'nl'}>Netherland</MenuItem>
                     </Select>
                 </FormControl>

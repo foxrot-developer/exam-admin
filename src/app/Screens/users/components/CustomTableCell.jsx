@@ -2,7 +2,7 @@ import React from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { IconButton, TableCell, Icon, TextField } from '@material-ui/core'
-import { FormControlLabel, Switch } from '@mui/material'
+import { Switch } from '@mui/material'
 
 const useStyles = makeStyles((theme) => ({
     input: {

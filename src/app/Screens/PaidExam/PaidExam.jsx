@@ -265,7 +265,16 @@ const PaidExam = () => {
                                     paddingLeft: '30px',
                                     paddingRight: '30px',
                                 }}
-                                disabled={language.isNetherlands ? false : true}
+                                disabled={
+                                    exam.name === '' &&
+                                    exam.description === '' &&
+                                    exam.name_ar === '' &&
+                                    exam.description_ar === '' &&
+                                    exam.name_nl === '' &&
+                                    exam.description_nl === ''
+                                        ? false
+                                        : true
+                                }
                             >
                                 Create
                             </Button>
@@ -282,6 +291,7 @@ const PaidExam = () => {
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         label="Language"
+                        value={lang}
                         onChange={(e) => {
                             setLang(e.target.value)
                             dispatch(getPaidExam(e.target.value))
@@ -289,7 +299,7 @@ const PaidExam = () => {
                         required
                     >
                         <MenuItem value={'en'}>English</MenuItem>
-                        <MenuItem value={'ar'}>Arbic</MenuItem>
+                        <MenuItem value={'ar'}>Arabic</MenuItem>
                         <MenuItem value={'nl'}>Netherland</MenuItem>
                     </Select>
                 </FormControl>

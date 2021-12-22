@@ -23,7 +23,7 @@ import { styled } from '@mui/material/styles'
 import { packageStatus } from 'app/redux/actions/PackageActions'
 import { useDispatch } from 'react-redux'
 import { Add, ArrowForward, Delete } from '@material-ui/icons'
-import { ListItemText, TextField } from '@mui/material'
+import { ListItemText, TextField, Switch } from '@mui/material'
 
 const useStyles = makeStyles(({ palette, ...theme }) => ({
     root: {
@@ -636,42 +636,26 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                         <IconButton onClick={() => setIsOpen(true)}>
                             <Icon>edit</Icon>
                         </IconButton>
-                        {subscriber.active ? (
-                            <IconButton
-                                onClick={() => {
-                                    if (lang === 'en') {
-                                        dispatch(
-                                            packageStatus(subscriber.id, false)
+                        <Switch
+                            value={subscriber.active}
+                            onChange={(e) => {
+                                if (lang === 'en') {
+                                    dispatch(
+                                        packageStatus(
+                                            subscriber.id,
+                                            e.target.checked
                                         )
-                                    } else {
-                                        dispatch(
-                                            packageStatus(
-                                                subscriber.enid,
-                                                false
-                                            )
+                                    )
+                                } else {
+                                    dispatch(
+                                        packageStatus(
+                                            subscriber.enid,
+                                            e.target.checked
                                         )
-                                    }
-                                }}
-                            >
-                                <Icon>lock_open</Icon>
-                            </IconButton>
-                        ) : (
-                            <IconButton
-                                onClick={() => {
-                                    if (lang === 'en') {
-                                        dispatch(
-                                            packageStatus(subscriber.id, true)
-                                        )
-                                    } else {
-                                        dispatch(
-                                            packageStatus(subscriber.enid, true)
-                                        )
-                                    }
-                                }}
-                            >
-                                <Icon>lock</Icon>
-                            </IconButton>
-                        )}
+                                    )
+                                }
+                            }}
+                        />
                     </>
                 </TableCell>
             </TableRow>
