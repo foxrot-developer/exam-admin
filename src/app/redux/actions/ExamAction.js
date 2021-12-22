@@ -77,7 +77,11 @@ export const createPaidExam = (exam, setOpen, lang) => (dispatch) => {
         .post('paid-exam/add-paid-exam', exam)
         .then((res) => {
             setOpen(false)
-            dispatch(getPaidExam(lang))
+            if (lang === '') {
+                dispatch(getPaidExam('en'))
+            } else {
+                dispatch(getPaidExam(lang))
+            }
         })
         .catch((err) => console.log(err))
 }
@@ -128,7 +132,7 @@ export const deletePaidExam = (id, lang) => (dispatch) => {
 }
 
 export const createPaidExamQuestion =
-    (exam, setOpen, setQuestion, lang) => (dispatch) => {
+    (exam, setOpen, setQuestion, lang, setCircles) => (dispatch) => {
         axiosInstance
             .post('paid-exam/add-paid-exam-question', exam)
             .then(() => {
@@ -146,9 +150,11 @@ export const createPaidExamQuestion =
                     options_nl: ['', '', ''],
                     answer_nl: '',
                     part_nl: '',
+                    circle: [],
                     image: null,
                 })
-                dispatch(getPaidQuestion('en'))
+                setCircles([])
+                dispatch(getPaidQuestion(lang))
             })
             .catch((err) => console.log(err))
     }

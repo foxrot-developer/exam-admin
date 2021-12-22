@@ -96,9 +96,30 @@ const PaidQuestion = () => {
         image: null,
     })
 
+    const [dragAndDropQuestion, setDragAndDropQuestion] = useState({
+        question: '',
+        options: ['', '', ''],
+        answer: [],
+        part: '',
+        question_ar: '',
+        options_ar: ['', '', ''],
+        answer_ar: [],
+        part_ar: '',
+        question_nl: '',
+        options_nl: ['', '', ''],
+        answer_nl: [],
+        part_nl: '',
+        circles: [],
+        image: null,
+        draggable: true,
+    })
+
     const englishPart = ['part 1', 'part 2', 'part 3']
     const arabicPart = ['الجزء 1', 'الجزء 2', 'الجزء 3']
     const netherlandsPart = ['Deel 1', 'Deel 2', 'Deel 3']
+    const dragDropenglishPart = ['part 2', 'part 3']
+    const dragDroparabicPart = ['الجزء 2', 'الجزء 3']
+    const dragDropnetherlandsPart = ['Deel 2', 'Deel 3']
     const [lang, setLang] = useState('en')
     useEffect(() => {
         if (questions) {
@@ -142,25 +163,82 @@ const PaidQuestion = () => {
         }
     }, [questions])
 
+    const [dragAbleOpen, setDragAbleOpen] = useState(false)
+
     const createQuestion = () => {
         if (language.isNetherlands) {
             console.log(question)
-            const data = new FormData()
-            data.append('question', question.question)
-            data.append('options', JSON.stringify(question.options))
-            data.append('answer', question.answer)
-            data.append('part', question.part)
-            data.append('question_ar', question.question_ar)
-            data.append('options_ar', JSON.stringify(question.options_ar))
-            data.append('answer_ar', question.answer_ar)
-            data.append('part_ar', question.part_ar)
-            data.append('question_nl', question.question_nl)
-            data.append('options_nl', JSON.stringify(question.options_nl))
-            data.append('answer_nl', question.answer_nl)
-            data.append('part_nl', question.part_nl)
-            data.append('questionImage', question.image)
+            if (!dragAbleOpen) {
+                const data = new FormData()
+                data.append('question', question.question)
+                data.append('options', JSON.stringify(question.options))
+                data.append('answer', question.answer)
+                data.append('part', question.part)
+                data.append('question_ar', question.question_ar)
+                data.append('options_ar', JSON.stringify(question.options_ar))
+                data.append('answer_ar', question.answer_ar)
+                data.append('part_ar', question.part_ar)
+                data.append('question_nl', question.question_nl)
+                data.append('options_nl', JSON.stringify(question.options_nl))
+                data.append('answer_nl', question.answer_nl)
+                data.append('part_nl', question.part_nl)
+                data.append('questionImage', question.image)
+                data.append('draggable', false)
+                dispatch(
+                    createPaidExamQuestion(
+                        data,
+                        setOpen,
+                        setQuestion,
+                        lang,
+                        setCircles
+                    )
+                )
+            } else {
+                const data = new FormData()
+                console.log({ dragAndDropQuestion })
+                data.append('question', dragAndDropQuestion.question)
+                data.append(
+                    'options',
+                    JSON.stringify(dragAndDropQuestion.options)
+                )
+                data.append(
+                    'answer',
+                    JSON.stringify(dragAndDropQuestion.circles)
+                )
+                data.append('part', dragAndDropQuestion.part)
+                data.append('question_ar', dragAndDropQuestion.question_ar)
+                data.append(
+                    'options_ar',
+                    JSON.stringify(dragAndDropQuestion.options_ar)
+                )
+                data.append(
+                    'answer_ar',
+                    JSON.stringify(dragAndDropQuestion.circles)
+                )
+                data.append('part_ar', dragAndDropQuestion.part_ar)
+                data.append('question_nl', dragAndDropQuestion.question_nl)
+                data.append(
+                    'options_nl',
+                    JSON.stringify(dragAndDropQuestion.options_nl)
+                )
+                data.append(
+                    'answer_nl',
+                    JSON.stringify(dragAndDropQuestion.circles)
+                )
+                data.append('part_nl', dragAndDropQuestion.part_nl)
+                data.append('questionImage', dragAndDropQuestion.image)
+                data.append('draggable', true)
 
-            dispatch(createPaidExamQuestion(data, setOpen, setQuestion))
+                dispatch(
+                    createPaidExamQuestion(
+                        data,
+                        setDragAbleOpen,
+                        setDragAndDropQuestion,
+                        lang,
+                        setCircles
+                    )
+                )
+            }
         } else if (language.isEnglish) {
             setLanguage({
                 isEnglish: false,
@@ -175,6 +253,59 @@ const PaidQuestion = () => {
             })
         }
     }
+
+    const [circles, setCircles] = useState([])
+
+    const getClickCoords = (event) => {
+        var e = event.target
+        var dim = e.getBoundingClientRect()
+        var x = event.clientX - dim.left
+        var y = event.clientY - dim.top
+        return [x, y]
+    }
+
+    const addCircle = (event) => {
+        if (circles.length < 3) {
+            let [x, y] = getClickCoords(event)
+            let newCircle = (
+                <g id="UrTavla">
+                    <circle
+                        key={circles.length + 1}
+                        cx={x}
+                        cy={y}
+                        r="20"
+                        stroke="black"
+                        strokeWidth="1"
+                        fill="white"
+                    ></circle>
+                    <text
+                        x={x}
+                        y={y}
+                        text-anchor="middle"
+                        stroke="#51c5cf"
+                        stroke-width="2px"
+                        dy=".3em"
+                    >
+                        {circles.length + 1}
+                    </text>
+                </g>
+            )
+            let allCircles = [...circles, newCircle]
+            setCircles(allCircles)
+            setDragAndDropQuestion({
+                ...dragAndDropQuestion,
+                circles: [
+                    ...dragAndDropQuestion.circles,
+                    {
+                        x: x,
+                        y: y,
+                        id: circles.length + 1,
+                    },
+                ],
+            })
+        }
+    }
+
     return (
         <Box component="div" className={classes.root}>
             <CustomModal open={open} setOpen={setOpen}>
@@ -625,6 +756,419 @@ const PaidQuestion = () => {
                     </Grid>
                 </FormControl>
             </CustomModal>
+            <CustomModal
+                open={dragAbleOpen}
+                setOpen={() => setDragAbleOpen(false)}
+            >
+                <FormControl encType="multipart/form-data">
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <Typography variant="h6">
+                                Create Question
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <svg
+                                onClick={addCircle}
+                                style={{
+                                    width: '750px',
+                                    height: '550px',
+                                    backgroundImage:
+                                        dragAndDropQuestion.image !== null &&
+                                        `url(${URL.createObjectURL(
+                                            dragAndDropQuestion.image
+                                        )})`,
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundPosition: 'center',
+                                    backgroundColor: '#ccc',
+                                    backgroundSize: 'cover',
+                                }}
+                            >
+                                {circles}
+                            </svg>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                margin="dense"
+                                fullWidth
+                                variant="outlined"
+                                required
+                                accept=".jpg, .png, .jpeg"
+                                type={'file'}
+                                onChange={(e) => {
+                                    setDragAndDropQuestion({
+                                        ...dragAndDropQuestion,
+                                        image: e.target.files[0],
+                                    })
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Box
+                                component="div"
+                                className={classes.languageBtnContainer}
+                            >
+                                <Button
+                                    variant="contained"
+                                    style={{
+                                        width: '30%',
+                                        backgroundColor: language.isEnglish
+                                            ? '#EEBC1D'
+                                            : '#FFF',
+                                        fontWeight: '600',
+                                        boxShadow: '0px 0px 10px #EEBC1D',
+                                        marginBottom: '10px',
+                                        padding: '10px',
+                                        paddingLeft: '30px',
+                                        paddingRight: '30px',
+                                    }}
+                                    onClick={() => {
+                                        setLanguage({
+                                            isEnglish: true,
+                                            isArabic: false,
+                                            isNetherlands: false,
+                                        })
+                                    }}
+                                >
+                                    English
+                                </Button>
+                                <Button
+                                    dis
+                                    variant="contained"
+                                    style={{
+                                        width: '30%',
+                                        backgroundColor: language.isArabic
+                                            ? '#EEBC1D'
+                                            : '#FFF',
+                                        fontWeight: '600',
+                                        boxShadow: '0px 0px 10px #EEBC1D',
+                                        marginBottom: '10px',
+                                        padding: '10px',
+                                        paddingLeft: '30px',
+                                        paddingRight: '30px',
+                                    }}
+                                    onClick={() => {
+                                        setLanguage({
+                                            isEnglish: false,
+                                            isArabic: true,
+                                            isNetherlands: false,
+                                        })
+                                    }}
+                                >
+                                    Arabic
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    style={{
+                                        width: '30%',
+                                        backgroundColor: language.isNetherlands
+                                            ? '#EEBC1D'
+                                            : '#FFF',
+                                        fontWeight: '600',
+                                        boxShadow: '0px 0px 10px #EEBC1D',
+                                        marginBottom: '10px',
+                                        padding: '10px',
+                                        paddingLeft: '30px',
+                                        paddingRight: '30px',
+                                    }}
+                                    onClick={() => {
+                                        setLanguage({
+                                            isEnglish: false,
+                                            isArabic: false,
+                                            isNetherlands: true,
+                                        })
+                                    }}
+                                >
+                                    Netherland
+                                </Button>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">
+                                    Part
+                                </InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    label="Age"
+                                    value={
+                                        language.isEnglish
+                                            ? dragAndDropQuestion.part
+                                            : language.isArabic
+                                            ? dragAndDropQuestion.part_ar
+                                            : dragAndDropQuestion.part_nl
+                                    }
+                                    onChange={(e) => {
+                                        if (language.isEnglish) {
+                                            const index =
+                                                dragDropenglishPart.indexOf(
+                                                    e.target.value
+                                                )
+                                            setDragAndDropQuestion({
+                                                ...dragAndDropQuestion,
+                                                part: dragDropenglishPart[
+                                                    index
+                                                ],
+                                                part_ar:
+                                                    dragDroparabicPart[index],
+                                                part_nl:
+                                                    dragDropnetherlandsPart[
+                                                        index
+                                                    ],
+                                            })
+                                        } else if (language.isArabic) {
+                                            const index =
+                                                dragDroparabicPart.indexOf(
+                                                    e.target.value
+                                                )
+                                            setDragAndDropQuestion({
+                                                ...dragAndDropQuestion,
+                                                part: dragDropenglishPart[
+                                                    index
+                                                ],
+                                                part_ar:
+                                                    dragDroparabicPart[index],
+                                                part_nl:
+                                                    dragDropnetherlandsPart[
+                                                        index
+                                                    ],
+                                            })
+                                        } else {
+                                            const index =
+                                                dragDropnetherlandsPart.indexOf(
+                                                    e.target.value
+                                                )
+                                            setDragAndDropQuestion({
+                                                ...dragAndDropQuestion,
+                                                part: dragDropenglishPart[
+                                                    index
+                                                ],
+                                                part_ar:
+                                                    dragDroparabicPart[index],
+                                                part_nl:
+                                                    dragDropnetherlandsPart[
+                                                        index
+                                                    ],
+                                            })
+                                        }
+                                    }}
+                                    required
+                                >
+                                    {language.isEnglish
+                                        ? dragDropenglishPart.map(
+                                              (part, index) => (
+                                                  <MenuItem
+                                                      key={index}
+                                                      value={part}
+                                                  >
+                                                      {part}
+                                                  </MenuItem>
+                                              )
+                                          )
+                                        : language.isArabic
+                                        ? dragDroparabicPart.map(
+                                              (part, index) => (
+                                                  <MenuItem
+                                                      key={index}
+                                                      value={part}
+                                                  >
+                                                      {part}
+                                                  </MenuItem>
+                                              )
+                                          )
+                                        : language.isNetherlands
+                                        ? dragDropnetherlandsPart.map(
+                                              (part, index) => (
+                                                  <MenuItem
+                                                      key={index}
+                                                      value={part}
+                                                  >
+                                                      {part}
+                                                  </MenuItem>
+                                              )
+                                          )
+                                        : null}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                margin="dense"
+                                fullWidth
+                                label="Question"
+                                variant="outlined"
+                                required
+                                lang="nl"
+                                value={
+                                    language.isEnglish
+                                        ? dragAndDropQuestion.question
+                                        : language.isArabic
+                                        ? dragAndDropQuestion.question_ar
+                                        : dragAndDropQuestion.question_nl
+                                }
+                                onChange={(e) => {
+                                    if (language.isEnglish) {
+                                        setDragAndDropQuestion({
+                                            ...dragAndDropQuestion,
+                                            question: e.target.value,
+                                        })
+                                    } else if (language.isArabic) {
+                                        setDragAndDropQuestion({
+                                            ...dragAndDropQuestion,
+                                            question_ar: e.target.value,
+                                        })
+                                    } else if (language.isNetherlands) {
+                                        setDragAndDropQuestion({
+                                            ...dragAndDropQuestion,
+                                            question_nl: e.target.value,
+                                        })
+                                    }
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                margin="dense"
+                                fullWidth
+                                label="Option A"
+                                variant="outlined"
+                                required
+                                value={
+                                    language.isEnglish
+                                        ? dragAndDropQuestion.options[0]
+                                        : language.isArabic
+                                        ? dragAndDropQuestion.options_ar[0]
+                                        : dragAndDropQuestion.options_nl[0]
+                                }
+                                onChange={(e) => {
+                                    setDragAndDropQuestion({
+                                        ...dragAndDropQuestion,
+                                        options: [
+                                            e.target.value,
+                                            dragAndDropQuestion.options[1],
+                                            dragAndDropQuestion.options[2],
+                                        ],
+                                        options_ar: [
+                                            e.target.value,
+                                            dragAndDropQuestion.options_ar[1],
+                                            dragAndDropQuestion.options_ar[2],
+                                        ],
+                                        options_nl: [
+                                            e.target.value,
+                                            dragAndDropQuestion.options_nl[1],
+                                            dragAndDropQuestion.options_nl[2],
+                                        ],
+                                    })
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                margin="dense"
+                                fullWidth
+                                label="Option B"
+                                variant="outlined"
+                                required
+                                value={
+                                    language.isEnglish
+                                        ? dragAndDropQuestion.options[1]
+                                        : language.isArabic
+                                        ? dragAndDropQuestion.options_ar[1]
+                                        : dragAndDropQuestion.options_nl[1]
+                                }
+                                onChange={(e) => {
+                                    setDragAndDropQuestion({
+                                        ...dragAndDropQuestion,
+                                        options: [
+                                            dragAndDropQuestion.options[0],
+                                            e.target.value,
+                                            dragAndDropQuestion.options[2],
+                                        ],
+                                        options_ar: [
+                                            dragAndDropQuestion.options_ar[0],
+                                            e.target.value,
+                                            dragAndDropQuestion.options_ar[2],
+                                        ],
+                                        options_nl: [
+                                            dragAndDropQuestion.options_nl[0],
+                                            e.target.value,
+                                            dragAndDropQuestion.options_nl[2],
+                                        ],
+                                    })
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                margin="dense"
+                                fullWidth
+                                label="Option C"
+                                variant="outlined"
+                                required
+                                value={
+                                    language.isEnglish
+                                        ? dragAndDropQuestion.options[2]
+                                        : language.isArabic
+                                        ? dragAndDropQuestion.options_ar[2]
+                                        : dragAndDropQuestion.options_nl[2]
+                                }
+                                onChange={(e) => {
+                                    setDragAndDropQuestion({
+                                        ...dragAndDropQuestion,
+                                        options: [
+                                            dragAndDropQuestion.options[0],
+                                            dragAndDropQuestion.options[1],
+                                            e.target.value,
+                                        ],
+                                        options_ar: [
+                                            dragAndDropQuestion.options_ar[0],
+                                            dragAndDropQuestion.options_ar[1],
+                                            e.target.value,
+                                        ],
+                                        options_nl: [
+                                            dragAndDropQuestion.options_nl[0],
+                                            dragAndDropQuestion.options_nl[1],
+                                            e.target.value,
+                                        ],
+                                    })
+                                }}
+                            />
+                        </Grid>
+
+                        <Box component="div" className={classes.modalContent}>
+                            <Button
+                                onClick={createQuestion}
+                                variant="contained"
+                                style={{
+                                    backgroundColor: '#EEBC1D',
+                                    fontWeight: '600',
+                                    boxShadow: '3px 3px 10px #EEBC1D',
+                                    marginBottom: '10px',
+                                    padding: '10px',
+                                    paddingLeft: '30px',
+                                    paddingRight: '30px',
+                                }}
+                                disabled={
+                                    dragAndDropQuestion.question === '' &&
+                                    dragAndDropQuestion.question_ar === '' &&
+                                    dragAndDropQuestion.question_nl === '' &&
+                                    dragAndDropQuestion.options.length === 0 &&
+                                    dragAndDropQuestion.options_ar.length ===
+                                        0 &&
+                                    dragAndDropQuestion.options_nl.length ===
+                                        0 &&
+                                    dragAndDropQuestion.part === '' &&
+                                    dragAndDropQuestion.part_ar === '' &&
+                                    dragAndDropQuestion.part_nl === ''
+                                }
+                            >
+                                Create
+                            </Button>
+                        </Box>
+                    </Grid>
+                </FormControl>
+            </CustomModal>
             <Box component="div" mb={4} className={classes.btnRoot}>
                 <IconButton
                     onClick={() => {
@@ -656,12 +1200,20 @@ const PaidQuestion = () => {
                         <MenuItem value={'nl'}>Netherland</MenuItem>
                     </Select>
                 </FormControl>
-                <CustomButton
-                    eventHandler={() => {
-                        setOpen(true)
-                    }}
-                    title="Create Question"
-                />
+                <Box component="div">
+                    <CustomButton
+                        eventHandler={() => {
+                            setOpen(true)
+                        }}
+                        title="Create Question"
+                    />
+                    <CustomButton
+                        eventHandler={() => {
+                            setDragAbleOpen(true)
+                        }}
+                        title="Create DragAble Question"
+                    />
+                </Box>
             </Box>
             <SimpleCard title="Part 1">
                 <PaginationTable data={questionList.part1} lang={lang} />
