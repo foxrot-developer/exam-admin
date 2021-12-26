@@ -13,11 +13,9 @@ import PaginationTable from './components/PaginationTable'
 import { ArrowBack } from '@material-ui/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-    createUser,
     getContentAr,
     getContentEn,
     getContentNl,
-    getUserList,
     updateDetail,
 } from 'app/redux/actions/UserActions'
 import CustomButton from 'app/components/Custom/CustomButton'
@@ -442,7 +440,7 @@ const ContactInfo = () => {
                                                 location:
                                                     updateDetails.location,
                                                 contact: updateDetails.contact,
-                                                email: '',
+                                                email: updateDetails.email,
                                                 hours: JSON.stringify([
                                                     updateDetails.hours,
                                                     updateDetails.hoursSaturday,
