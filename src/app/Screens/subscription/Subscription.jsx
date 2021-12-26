@@ -81,6 +81,7 @@ const Subscription = () => {
         no_exam: '',
         repeat: '',
         langs: [],
+        interval: '',
         package_name_ar: '',
         price_ar: '',
         description_ar: [],
@@ -102,6 +103,7 @@ const Subscription = () => {
                 duration: packages.duration,
                 no_exam: packages.no_exam,
                 repeat: packages.repeat,
+                interval: packages.interval,
                 langs: JSON.stringify(packages.langs),
                 package_name_ar: packages.package_name_ar,
                 price_ar: packages.price_ar,
@@ -115,7 +117,7 @@ const Subscription = () => {
                 langs_nl: JSON.stringify(packages.langs_nl),
             }
 
-            dispatch(createPackage(data, setIsOpen))
+            dispatch(createPackage(data, setIsOpen, lang))
         } else if (language.isEnglish) {
             setLanguage({
                 isEnglish: false,
@@ -284,6 +286,23 @@ const Subscription = () => {
                                 price: e.target.value,
                                 price_ar: e.target.value,
                                 price_nl: e.target.value,
+                            })
+                        }}
+                        required
+                    />
+                    <TextField
+                        margin="dense"
+                        fullWidth
+                        id="outlined-basic"
+                        label="Interval"
+                        type="number"
+                        max={12}
+                        variant="outlined"
+                        value={packages.interval}
+                        onChange={(e) => {
+                            setPackage({
+                                ...packages,
+                                interval: e.target.value,
                             })
                         }}
                         required
@@ -564,22 +583,22 @@ const Subscription = () => {
                             onClick={onCreateHandler}
                             variant="contained"
                             disabled={
-                                packages.package_name === '' &&
-                                packages.price === '' &&
-                                packages.description.length === 0 &&
-                                packages.duration === '' &&
-                                packages.no_exam === '' &&
-                                packages.repeat === '' &&
-                                packages.langs.length === 0 &&
-                                packages.package_name_ar === '' &&
-                                packages.price_ar === '' &&
-                                packages.description_ar.length === 0 &&
-                                packages.duration_ar === '' &&
-                                packages.langs_ar.length === 0 &&
-                                packages.package_name_nl === '' &&
-                                packages.price_nl === '' &&
-                                packages.description_nl.length === 0 &&
-                                packages.duration_nl === '' &&
+                                packages.package_name === '' ||
+                                packages.price === '' ||
+                                packages.description.length === 0 ||
+                                packages.duration === '' ||
+                                packages.no_exam === '' ||
+                                packages.repeat === '' ||
+                                packages.langs.length === 0 ||
+                                packages.package_name_ar === '' ||
+                                packages.price_ar === '' ||
+                                packages.description_ar.length === 0 ||
+                                packages.duration_ar === '' ||
+                                packages.langs_ar.length === 0 ||
+                                packages.package_name_nl === '' ||
+                                packages.price_nl === '' ||
+                                packages.description_nl.length === 0 ||
+                                packages.duration_nl === '' ||
                                 packages.langs_nl.length === 0
                                     ? true
                                     : false

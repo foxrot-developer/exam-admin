@@ -35,9 +35,9 @@ export const createPackage = (data, setOpen, lang) => (dispatch) => {
             console.log(err)
         })
 }
-export const updatePackage = (data, setOpen, lang) => (dispatch) => {
+export const updatePackage = (id, data, setOpen, lang) => (dispatch) => {
     axiosInstance
-        .post('admin/create-package', data)
+        .patch(`admin/edit-package/${id}`, data)
         .then((res) => {
             dispatch(getPackageList(lang))
             setOpen(false)

@@ -20,7 +20,7 @@ import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import { styled } from '@mui/material/styles'
-import { packageStatus } from 'app/redux/actions/PackageActions'
+import { packageStatus, updatePackage } from 'app/redux/actions/PackageActions'
 import { useDispatch } from 'react-redux'
 import { Add, ArrowForward, Delete } from '@material-ui/icons'
 import { ListItemText, TextField, Switch } from '@mui/material'
@@ -74,7 +74,7 @@ const Demo = styled('div')(({ theme }) => ({
     width: '100%',
 }))
 
-const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
+const CustomTableCell = ({ subscriber, removeUser, lang }) => {
     const dispatch = useDispatch()
     const classes = useStyles()
     const [language, setLanguage] = useState({
@@ -91,6 +91,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
         duration: '',
         no_exam: '',
         repeat: '',
+        interval: '',
         langs: [],
         package_name_ar: '',
         price_ar: '',
@@ -109,11 +110,35 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
     const arabicDuration = ['يوم', 'أسبوع', 'شهر', 'سنة']
     const netherlandsDuration = ['dag', 'week', 'maand', 'jaar']
 
+    const updateHandler = (packages, id) => {
+        const updateData = {
+            package_name: packages.package_name,
+            price: packages.price,
+            description: JSON.stringify(packages.description),
+            duration: packages.duration,
+            no_exam: packages.no_exam,
+            repeat: packages.repeat,
+            interval: packages.interval,
+            langs: JSON.stringify(packages.langs),
+            package_name_ar: packages.package_name_ar,
+            price_ar: packages.price_ar,
+            description_ar: JSON.stringify(packages.description_ar),
+            duration_ar: packages.duration_ar,
+            langs_ar: JSON.stringify(packages.langs_ar),
+            package_name_nl: packages.package_name_nl,
+            price_nl: packages.price_nl,
+            description_nl: JSON.stringify(packages.description_nl),
+            duration_nl: packages.duration_nl,
+            langs_nl: JSON.stringify(packages.langs_nl),
+        }
+        dispatch(updatePackage(id, updateData, setIsOpen, lang))
+    }
+
     useEffect(() => {
         if (subscriber !== undefined && subscriber !== null) {
             console.log({ subscriber: subscriber })
             if (lang === 'en') {
-                var index = englishDuration.indexOf(subscriber.duration)
+                const index = englishDuration.indexOf(subscriber.duration)
                 setPackage({
                     package_name: subscriber.package_name,
                     price: subscriber.price,
@@ -123,6 +148,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                     repeat: subscriber.repeat,
                     langs: JSON.parse(subscriber.langs),
                     package_name_ar: '',
+                    interval: subscriber.interval,
                     price_ar: '',
                     description_ar: [],
                     duration_ar: arabicDuration[index],
@@ -134,7 +160,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                     langs_nl: [],
                 })
             } else if (lang === 'ar') {
-                var index = arabicDuration.indexOf(subscriber.duration_ar)
+                const index = arabicDuration.indexOf(subscriber.duration_ar)
                 setPackage({
                     package_name: '',
                     price: '',
@@ -143,6 +169,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                     no_exam: '',
                     repeat: '',
                     langs: [],
+                    interval: subscriber.interval,
                     package_name_ar: subscriber.package_name,
                     price_ar: subscriber.price,
                     description_ar: JSON.parse(subscriber.description),
@@ -155,7 +182,9 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                     langs_nl: [],
                 })
             } else if (lang === 'nl') {
-                var index = netherlandsDuration.indexOf(subscriber.duration_nl)
+                const index = netherlandsDuration.indexOf(
+                    subscriber.duration_nl
+                )
                 setPackage({
                     package_name: '',
                     price: '',
@@ -164,6 +193,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                     no_exam: '',
                     repeat: '',
                     langs: [],
+                    interval: subscriber.interval,
                     package_name_ar: '',
                     price_ar: '',
                     description_ar: [],
@@ -317,6 +347,22 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                 price: e.target.value,
                                 price_ar: e.target.value,
                                 price_nl: e.target.value,
+                            })
+                        }}
+                        required
+                    />
+                    <TextField
+                        margin="dense"
+                        fullWidth
+                        id="outlined-basic"
+                        label="Interval"
+                        type="number"
+                        variant="outlined"
+                        value={packages.interval}
+                        onChange={(e) => {
+                            setPackage({
+                                ...packages,
+                                interval: e.target.value,
                             })
                         }}
                         required
@@ -596,9 +642,9 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                         <Button
                             onClick={() => {
                                 if (lang === 'en') {
-                                    updateData(packages, subscriber.id)
+                                    updateHandler(packages, subscriber.id)
                                 } else {
-                                    updateData(packages, subscriber.enid, lang)
+                                    updateHandler(packages, subscriber.enid)
                                 }
                             }}
                             variant="contained"
@@ -618,6 +664,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
             <TableRow key={subscriber.id}>
                 <TableCell colSpan={2}>{subscriber.package_name}</TableCell>
                 <TableCell>{subscriber.price}</TableCell>
+                <TableCell>{subscriber.interval}</TableCell>
                 <TableCell>{subscriber.duration}</TableCell>
                 <TableCell>{subscriber?.no_exam}</TableCell>
                 <TableCell colspan={2} align="center">

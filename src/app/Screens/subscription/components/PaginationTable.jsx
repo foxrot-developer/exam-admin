@@ -28,28 +28,6 @@ const PaginationTable = ({ data, lang }) => {
     const removeUser = (id) => {
         dispatch(deletePackage(id, lang))
     }
-    const updateHandler = (packages, id) => {
-        const updateData = {
-            package_name: packages.package_name,
-            price: packages.price,
-            description: JSON.stringify(packages.description),
-            duration: packages.duration,
-            no_exam: packages.no_exam,
-            repeat: packages.repeat,
-            langs: JSON.stringify(packages.langs),
-            package_name_ar: packages.package_name_ar,
-            price_ar: packages.price_ar,
-            description_ar: JSON.stringify(packages.description_ar),
-            duration_ar: packages.duration_ar,
-            langs_ar: JSON.stringify(packages.langs_ar),
-            package_name_nl: packages.package_name_nl,
-            price_nl: packages.price_nl,
-            description_nl: JSON.stringify(packages.description_nl),
-            duration_nl: packages.duration_nl,
-            langs_nl: JSON.stringify(packages.langs_nl),
-        }
-        dispatch(updatePackage(id, updateData, lang))
-    }
 
     return (
         <div style={{ overflowX: 'auto' }} className="w-full overflow-auto">
@@ -58,6 +36,7 @@ const PaginationTable = ({ data, lang }) => {
                     <TableRow>
                         <TableCell colSpan={2}>Name</TableCell>
                         <TableCell>Price</TableCell>
+                        <TableCell>Inverval</TableCell>
                         <TableCell>Duration</TableCell>
                         <TableCell>No Of Exams</TableCell>
                         <TableCell colSpan={2} align="center">
@@ -78,7 +57,6 @@ const PaginationTable = ({ data, lang }) => {
                                     lang={lang}
                                     subscriber={subscriber}
                                     removeUser={removeUser}
-                                    updateData={updateHandler}
                                 />
                             ))}
                 </TableBody>
