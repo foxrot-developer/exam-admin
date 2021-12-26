@@ -581,8 +581,8 @@ const Subscription = () => {
                                 packages.description_nl.length === 0 &&
                                 packages.duration_nl === '' &&
                                 packages.langs_nl.length === 0
-                                    ? false
-                                    : true
+                                    ? true
+                                    : false
                             }
                             style={{
                                 backgroundColor: '#EEBC1D',
