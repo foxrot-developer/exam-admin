@@ -637,7 +637,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                             <Icon>edit</Icon>
                         </IconButton>
                         <Switch
-                            value={subscriber.active}
+                            checked={subscriber.active}
                             onChange={(e) => {
                                 if (lang === 'en') {
                                     dispatch(

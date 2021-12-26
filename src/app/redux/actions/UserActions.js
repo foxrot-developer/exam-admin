@@ -5,6 +5,7 @@ export const GET_ALL_PAYMENT = 'GET_ALL_PAYMENT'
 export const GET_WEB_PROFILE_EN = 'GET_WEB_PROFILE_EN'
 export const GET_WEB_PROFILE_AR = 'GET_WEB_PROFILE_AR'
 export const GET_WEB_PROFILE_NL = 'GET_WEB_PROFILE_NL'
+export const GET_EMAIL_TEMPLATE = 'GET_EMAIL_TEMPLATE'
 
 export const getUserList = () => (dispatch) => {
     axiosInstance.get('admin/all-users').then((res) => {
@@ -241,6 +242,31 @@ export const updatePackageSection = (data, setOpen) => (dispatch) => {
             dispatch(getContentEn())
             dispatch(getContentAr())
             dispatch(getContentNl())
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+export const getEmailTemplate = () => (dispatch) => {
+    axiosInstance
+        .get('admin/get-email-template')
+        .then((res) => {
+            dispatch({
+                type: GET_EMAIL_TEMPLATE,
+                payload: res.data.email_template,
+            })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+export const updateEmailTemplate = (data) => (dispatch) => {
+    axiosInstance
+        .patch(`admin/email-template`, data)
+        .then((res) => {
+            dispatch(getEmailTemplate())
         })
         .catch((err) => {
             console.log(err)

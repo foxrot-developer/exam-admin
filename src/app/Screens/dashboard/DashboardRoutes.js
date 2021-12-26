@@ -60,6 +60,11 @@ const dashboardRoutes = [
         auth: authRoles.sa,
     },
     {
+        path: '/dashboard/template',
+        component: React.lazy(() => import('../Email/Template')),
+        auth: authRoles.sa,
+    },
+    {
         path: '/dashboard/footer-section',
         component: React.lazy(() => import('../WebContent/FooterSections')),
         auth: authRoles.sa,

@@ -203,9 +203,9 @@ const CustomTableCell = ({
                             <Icon>delete</Icon>
                         </IconButton>
                         <Switch
-                            value={subscriber.block}
+                            checked={!subscriber.block}
                             onChange={(e) => {
-                                blockUser(subscriber.id, e.target.checked)
+                                blockUser(subscriber.id, !e.target.checked)
                             }}
                         />
                     </>

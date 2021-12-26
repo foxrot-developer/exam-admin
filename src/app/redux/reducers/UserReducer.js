@@ -4,6 +4,7 @@ import {
     GET_WEB_PROFILE_EN,
     GET_WEB_PROFILE_AR,
     GET_WEB_PROFILE_NL,
+    GET_EMAIL_TEMPLATE,
 } from '../actions/UserActions'
 const initialState = {
     userList: [],
@@ -11,6 +12,7 @@ const initialState = {
     detail_en: {},
     detail_ar: {},
     detail_nl: {},
+    email: {},
 }
 
 const UserReducer = (state = initialState, action) => {
@@ -41,6 +43,12 @@ const UserReducer = (state = initialState, action) => {
                 ...state,
                 detail_nl: action.payload,
             }
+        case GET_EMAIL_TEMPLATE:
+            return {
+                ...state,
+                email: action.payload,
+            }
+
         default:
             return state
     }

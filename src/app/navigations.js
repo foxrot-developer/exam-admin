@@ -5,6 +5,11 @@ export const navigations = [
         icon: 'dashboard',
     },
     {
+        name: 'Email Template',
+        path: '/dashboard/template',
+        icon: 'email',
+    },
+    {
         label: 'Website Content',
         type: 'label',
     },
@@ -36,7 +41,7 @@ export const navigations = [
     {
         name: 'Package Section',
         path: '/dashboard/package-section',
-        icon: 'phonebook',
+        icon: 'add_shopping_cart',
     },
     {
         name: 'Footer Section',
