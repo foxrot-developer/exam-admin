@@ -42,7 +42,7 @@ const SecondarySidebarToggle = () => {
                 open: settings.secondarySidebar.open,
             })}
         >
-            {settings.secondarySidebar.open && (
+            {/* {settings.secondarySidebar.open && (
                 <IconButton onClick={toggle} size="small" aria-label="toggle">
                     <Icon>close</Icon>
                 </IconButton>
@@ -58,7 +58,7 @@ const SecondarySidebarToggle = () => {
                 >
                     <Icon>settings</Icon>
                 </Fab>
-            )}
+            )} */}
         </div>
     )
 }

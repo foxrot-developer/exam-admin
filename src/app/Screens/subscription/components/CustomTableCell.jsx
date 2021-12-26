@@ -616,11 +616,11 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                 </Grid>
             </CustomModal>
             <TableRow key={subscriber.id}>
-                <TableCell colSpan={3}>{subscriber.package_name}</TableCell>
+                <TableCell colSpan={2}>{subscriber.package_name}</TableCell>
                 <TableCell>{subscriber.price}</TableCell>
                 <TableCell>{subscriber.duration}</TableCell>
                 <TableCell>{subscriber?.no_exam}</TableCell>
-                <TableCell align="center">
+                <TableCell colspan={2} align="center">
                     <>
                         <IconButton
                             onClick={() => {
@@ -643,14 +643,16 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                     dispatch(
                                         packageStatus(
                                             subscriber.id,
-                                            e.target.checked
+                                            e.target.checked,
+                                            lang
                                         )
                                     )
                                 } else {
                                     dispatch(
                                         packageStatus(
                                             subscriber.enid,
-                                            e.target.checked
+                                            e.target.checked,
+                                            lang
                                         )
                                     )
                                 }

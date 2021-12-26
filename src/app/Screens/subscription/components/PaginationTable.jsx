@@ -56,11 +56,13 @@ const PaginationTable = ({ data, lang }) => {
             <Table style={{ minWidth: 700 }} className="whitespace-pre">
                 <TableHead>
                     <TableRow>
-                        <TableCell colSpan={3}>Name</TableCell>
+                        <TableCell colSpan={2}>Name</TableCell>
                         <TableCell>Price</TableCell>
                         <TableCell>Duration</TableCell>
                         <TableCell>No Of Exams</TableCell>
-                        <TableCell align="center">Action</TableCell>
+                        <TableCell colSpan={2} align="center">
+                            Action
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

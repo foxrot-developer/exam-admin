@@ -24,15 +24,13 @@ const Brand = ({ children }) => {
             className={clsx('flex items-center justify-between', classes.brand)}
         >
             <div className="flex items-center">
-                <img src={logo} alt="logo" />
-                <span
-                    className={clsx({
-                        'text-18 ml-2 font-medium sidenavHoverShow': true,
-                        [classes.hideOnCompact]: mode === 'compact',
-                    })}
-                >
-                    Examin
-                </span>
+                <img
+                    style={{
+                        width: '150px',
+                    }}
+                    src={logo}
+                    alt="logo"
+                />
             </div>
             <div
                 className={clsx({

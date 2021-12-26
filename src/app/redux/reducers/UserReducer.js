@@ -1,12 +1,16 @@
 import {
     GET_USER_LIST,
     GET_ALL_PAYMENT,
-    GET_WEB_PROFILE,
+    GET_WEB_PROFILE_EN,
+    GET_WEB_PROFILE_AR,
+    GET_WEB_PROFILE_NL,
 } from '../actions/UserActions'
 const initialState = {
     userList: [],
     paymentMethod: [],
-    detail: {},
+    detail_en: {},
+    detail_ar: {},
+    detail_nl: {},
 }
 
 const UserReducer = (state = initialState, action) => {
@@ -22,10 +26,20 @@ const UserReducer = (state = initialState, action) => {
                 ...state,
                 paymentMethod: action.payload,
             }
-        case GET_WEB_PROFILE:
+        case GET_WEB_PROFILE_EN:
             return {
                 ...state,
-                detail: action.payload,
+                detail_en: action.payload,
+            }
+        case GET_WEB_PROFILE_AR:
+            return {
+                ...state,
+                detail_ar: action.payload,
+            }
+        case GET_WEB_PROFILE_NL:
+            return {
+                ...state,
+                detail_nl: action.payload,
             }
         default:
             return state

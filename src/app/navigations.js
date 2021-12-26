@@ -1,41 +1,48 @@
-import { authRoles } from './auth/authRoles'
-
 export const navigations = [
     {
         name: 'Dashboard',
         path: '/dashboard',
         icon: 'dashboard',
     },
-    // {
-    //     label: 'Pages',
-    //     type: 'label',
-    // },
-    // {
-    //     name: 'Session/Auth',
-    //     icon: 'security',
-    //     children: [
-    //         {
-    //             name: 'Sign in',
-    //             iconText: 'SI',
-    //             path: '/session/signin',
-    //         },
-    //         {
-    //             name: 'Sign up',
-    //             iconText: 'SU',
-    //             path: '/session/signup',
-    //         },
-    //         {
-    //             name: 'Forgot Password',
-    //             iconText: 'FP',
-    //             path: '/session/forgot-password',
-    //         },
-    //         {
-    //             name: 'Error',
-    //             iconText: '404',
-    //             path: '/session/404',
-    //         },
-    //     ],
-    // },
+    {
+        label: 'Website Content',
+        type: 'label',
+    },
+    {
+        name: 'Contact Info',
+        path: '/dashboard/contact-info',
+        icon: 'phonebook',
+    },
+    {
+        name: 'Hero Section',
+        path: '/dashboard/hero-section',
+        icon: 'edit',
+    },
+    {
+        name: 'About Section',
+        path: '/dashboard/about-section',
+        icon: 'info',
+    },
+    {
+        name: 'Language Section',
+        path: '/dashboard/language-section',
+        icon: 'language',
+    },
+    {
+        name: 'Contact Section',
+        path: '/dashboard/contact-section',
+        icon: 'phonebook',
+    },
+    {
+        name: 'Package Section',
+        path: '/dashboard/package-section',
+        icon: 'phonebook',
+    },
+    {
+        name: 'Footer Section',
+        path: '/dashboard/footer-section',
+        icon: 'edit',
+    },
 
     // {
     //     label: 'Components',

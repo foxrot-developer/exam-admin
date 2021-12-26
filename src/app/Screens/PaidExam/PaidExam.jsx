@@ -265,16 +265,6 @@ const PaidExam = () => {
                                     paddingLeft: '30px',
                                     paddingRight: '30px',
                                 }}
-                                disabled={
-                                    exam.name === '' &&
-                                    exam.description === '' &&
-                                    exam.name_ar === '' &&
-                                    exam.description_ar === '' &&
-                                    exam.name_nl === '' &&
-                                    exam.description_nl === ''
-                                        ? false
-                                        : true
-                                }
                             >
                                 Create
                             </Button>

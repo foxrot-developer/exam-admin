@@ -135,6 +135,7 @@ const Subscription = () => {
         isArabic: false,
         isNetherlands: false,
     })
+
     React.useEffect(() => {
         dispatch(getPackageList('en'))
     }, [])

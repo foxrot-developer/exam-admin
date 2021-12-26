@@ -20,11 +20,6 @@ const dashboardRoutes = [
         auth: authRoles.sa,
     },
     {
-        path: '/dashboard/details',
-        component: React.lazy(() => import('../Detail/Detail')),
-        auth: authRoles.sa,
-    },
-    {
         path: '/dashboard/results',
         component: React.lazy(() => import('../ExamResult/ExamResult')),
         auth: authRoles.sa,
@@ -47,6 +42,41 @@ const dashboardRoutes = [
     {
         path: '/dashboard/subscription',
         component: React.lazy(() => import('../subscription/Subscription')),
+        auth: authRoles.sa,
+    },
+    {
+        path: '/dashboard/about-section',
+        component: React.lazy(() => import('../WebContent/AboutSection')),
+        auth: authRoles.sa,
+    },
+    {
+        path: '/dashboard/contact-info',
+        component: React.lazy(() => import('../WebContent/ContactInfo')),
+        auth: authRoles.sa,
+    },
+    {
+        path: '/dashboard/contact-section',
+        component: React.lazy(() => import('../WebContent/ContactSection')),
+        auth: authRoles.sa,
+    },
+    {
+        path: '/dashboard/footer-section',
+        component: React.lazy(() => import('../WebContent/FooterSections')),
+        auth: authRoles.sa,
+    },
+    {
+        path: '/dashboard/hero-section',
+        component: React.lazy(() => import('../WebContent/HeroSection')),
+        auth: authRoles.sa,
+    },
+    {
+        path: '/dashboard/package-section',
+        component: React.lazy(() => import('../WebContent/PackageSection')),
+        auth: authRoles.sa,
+    },
+    {
+        path: '/dashboard/language-section',
+        component: React.lazy(() => import('../WebContent/LanguageSection')),
         auth: authRoles.sa,
     },
     {

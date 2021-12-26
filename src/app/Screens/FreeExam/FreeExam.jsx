@@ -95,15 +95,15 @@ const FreeExam = () => {
     })
     const [dragAndDropQuestion, setDragAndDropQuestion] = useState({
         question: '',
-        options: ['', '', ''],
+        options: ['', '', '', '', ''],
         answer: [],
         part: '',
         question_ar: '',
-        options_ar: ['', '', ''],
+        options_ar: ['', '', '', '', ''],
         answer_ar: [],
         part_ar: '',
         question_nl: '',
-        options_nl: ['', '', ''],
+        options_nl: ['', '', '', '', ''],
         answer_nl: [],
         part_nl: '',
         circles: [],
@@ -224,6 +224,7 @@ const FreeExam = () => {
                         lang
                     )
                 )
+                setCircles([])
             }
         } else if (language.isEnglish) {
             setLanguage({
@@ -251,7 +252,7 @@ const FreeExam = () => {
     }
 
     const addCircle = (event) => {
-        if (circles.length < 3) {
+        if (circles.length < 5) {
             let [x, y] = getClickCoords(event)
             let newCircle = (
                 <g id="UrTavla">
@@ -767,11 +768,24 @@ const FreeExam = () => {
                                     backgroundPosition: 'center',
                                     backgroundColor: '#ccc',
                                     backgroundSize: 'cover',
+                                    alignSelf: 'center',
                                 }}
                             >
                                 {circles}
                             </svg>
                         </Grid>
+                        <Button
+                            onClick={() => {
+                                setCircles([])
+                                setDragAndDropQuestion({
+                                    ...dragAndDropQuestion,
+                                    circles: [],
+                                })
+                            }}
+                            variant="outlined"
+                        >
+                            Reset
+                        </Button>
                         <Grid item xs={12}>
                             <TextField
                                 margin="dense"
@@ -876,7 +890,7 @@ const FreeExam = () => {
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    label="Age"
+                                    label="Part"
                                     value={
                                         language.isEnglish
                                             ? dragAndDropQuestion.part
@@ -1120,79 +1134,90 @@ const FreeExam = () => {
                                 }}
                             />
                         </Grid>
-
-                        {/* <Grid item xs={12}>
-                            <FormControl fullWidth>
-                                <InputLabel id="correct-answer">
-                                    Correct Aswer
-                                </InputLabel>
-                                <Select
-                                    labelId="correct-answer"
-                                    id="correct-answer"
-                                    label="Correct Answer"
-                                    multiple
-                                    value={
-                                        language.isEnglish
-                                            ? dragAndDropQuestion.answer
-                                            : language.isArabic
-                                            ? dragAndDropQuestion.answer_ar
-                                            : dragAndDropQuestion.answer_nl
-                                    }
-                                    required
-                                    onChange={(e) => {
-                                        if (language.isEnglish) {
-                                            setDragAndDropQuestion({
-                                                ...dragAndDropQuestion,
-                                                answer: e.target.value,
-                                            })
-                                        } else if (language.isArabic) {
-                                            setDragAndDropQuestion({
-                                                ...dragAndDropQuestion,
-                                                answer_ar: e.target.value,
-                                            })
-                                        } else if (language.isNetherlands) {
-                                            setDragAndDropQuestion({
-                                                ...dragAndDropQuestion,
-                                                answer_nl: e.target.value,
-                                            })
-                                        }
-                                    }}
-                                >
-                                    {language.isEnglish
-                                        ? dragAndDropQuestion.options.map(
-                                              (option, index) => (
-                                                  <MenuItem
-                                                      key={index}
-                                                      value={option}
-                                                  >
-                                                      {option}
-                                                  </MenuItem>
-                                              )
-                                          )
+                        <Grid item xs={12}>
+                            <TextField
+                                margin="dense"
+                                fullWidth
+                                label="Option D"
+                                variant="outlined"
+                                required
+                                value={
+                                    language.isEnglish
+                                        ? dragAndDropQuestion.options[3]
                                         : language.isArabic
-                                        ? dragAndDropQuestion.options_ar.map(
-                                              (option, index) => (
-                                                  <MenuItem
-                                                      key={index}
-                                                      value={option}
-                                                  >
-                                                      {option}
-                                                  </MenuItem>
-                                              )
-                                          )
-                                        : dragAndDropQuestion.options_nl.map(
-                                              (option, index) => (
-                                                  <MenuItem
-                                                      key={index}
-                                                      value={option}
-                                                  >
-                                                      {option}
-                                                  </MenuItem>
-                                              )
-                                          )}
-                                </Select>
-                            </FormControl>
-                        </Grid> */}
+                                        ? dragAndDropQuestion.options_ar[3]
+                                        : dragAndDropQuestion.options_nl[3]
+                                }
+                                onChange={(e) => {
+                                    setDragAndDropQuestion({
+                                        ...dragAndDropQuestion,
+                                        options: [
+                                            dragAndDropQuestion.options[0],
+                                            dragAndDropQuestion.options[1],
+                                            dragAndDropQuestion.options[2],
+                                            e.target.value,
+                                            dragAndDropQuestion.options[4],
+                                        ],
+                                        options_ar: [
+                                            dragAndDropQuestion.options_ar[0],
+                                            dragAndDropQuestion.options_ar[1],
+                                            dragAndDropQuestion.options_ar[2],
+                                            e.target.value,
+                                            dragAndDropQuestion.options_ar[4],
+                                        ],
+                                        options_nl: [
+                                            dragAndDropQuestion.options_nl[0],
+                                            dragAndDropQuestion.options_nl[1],
+                                            dragAndDropQuestion.options_nl[2],
+                                            e.target.value,
+                                            dragAndDropQuestion.options_nl[4],
+                                        ],
+                                    })
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                margin="dense"
+                                fullWidth
+                                label="Option E"
+                                variant="outlined"
+                                required
+                                value={
+                                    language.isEnglish
+                                        ? dragAndDropQuestion.options[4]
+                                        : language.isArabic
+                                        ? dragAndDropQuestion.options_ar[4]
+                                        : dragAndDropQuestion.options_nl[4]
+                                }
+                                onChange={(e) => {
+                                    setDragAndDropQuestion({
+                                        ...dragAndDropQuestion,
+                                        options: [
+                                            dragAndDropQuestion.options[0],
+                                            dragAndDropQuestion.options[1],
+                                            dragAndDropQuestion.options[2],
+                                            dragAndDropQuestion.options[3],
+                                            e.target.value,
+                                        ],
+                                        options_ar: [
+                                            dragAndDropQuestion.options_ar[0],
+                                            dragAndDropQuestion.options_ar[1],
+                                            dragAndDropQuestion.options_ar[2],
+                                            dragAndDropQuestion.options_ar[3],
+                                            e.target.value,
+                                        ],
+                                        options_nl: [
+                                            dragAndDropQuestion.options_nl[0],
+                                            dragAndDropQuestion.options_nl[1],
+                                            dragAndDropQuestion.options_nl[2],
+                                            dragAndDropQuestion.options_nl[3],
+                                            e.target.value,
+                                        ],
+                                    })
+                                }}
+                            />
+                        </Grid>
                         <Box component="div" className={classes.modalContent}>
                             <Button
                                 onClick={createQuestion}
@@ -1222,7 +1247,7 @@ const FreeExam = () => {
                                         : false
                                 }
                             >
-                                Create
+                                {language.isNetherlands ? 'Create' : 'Next'}
                             </Button>
                         </Box>
                     </Grid>
