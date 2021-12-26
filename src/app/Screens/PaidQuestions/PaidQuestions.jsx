@@ -733,22 +733,6 @@ const PaidQuestion = () => {
                                     paddingLeft: '30px',
                                     paddingRight: '30px',
                                 }}
-                                disabled={
-                                    question.question === '' &&
-                                    question.question_ar === '' &&
-                                    question.question_nl === '' &&
-                                    question.options.length === 0 &&
-                                    question.options_ar.length === 0 &&
-                                    question.options_nl.length === 0 &&
-                                    question.answer === '' &&
-                                    question.answer_ar === '' &&
-                                    question.answer_nl === '' &&
-                                    question.part === '' &&
-                                    question.part_ar === '' &&
-                                    question.part_nl === ''
-                                        ? false
-                                        : true
-                                }
                             >
                                 Create
                             </Button>
@@ -1245,21 +1229,6 @@ const PaidQuestion = () => {
                                     paddingLeft: '30px',
                                     paddingRight: '30px',
                                 }}
-                                disabled={
-                                    dragAndDropQuestion.question === '' &&
-                                    dragAndDropQuestion.question_ar === '' &&
-                                    dragAndDropQuestion.question_nl === '' &&
-                                    dragAndDropQuestion.options.length === 0 &&
-                                    dragAndDropQuestion.options_ar.length ===
-                                        0 &&
-                                    dragAndDropQuestion.options_nl.length ===
-                                        0 &&
-                                    dragAndDropQuestion.part === '' &&
-                                    dragAndDropQuestion.part_ar === '' &&
-                                    dragAndDropQuestion.part_nl === ''
-                                        ? true
-                                        : false
-                                }
                             >
                                 {language.isNetherlands ? 'Create' : 'Next'}
                             </Button>
