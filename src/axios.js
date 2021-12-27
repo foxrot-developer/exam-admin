@@ -10,10 +10,16 @@ axiosInstance.interceptors.request.use((request) => {
     return request
 })
 
-axiosInstance.interceptors.response.use((response) => {
-    document.querySelector('.overlay').style.display = 'none'
+axiosInstance.interceptors.response.use(
+    (response) => {
+        document.querySelector('.overlay').style.display = 'none'
 
-    return response
-})
+        return response
+    },
+    (error) => {
+        document.querySelector('.overlay').style.display = 'none'
+        return error
+    }
+)
 
 export default axiosInstance

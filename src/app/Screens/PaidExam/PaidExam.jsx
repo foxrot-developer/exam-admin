@@ -18,7 +18,11 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
-import { getPaidExam, createPaidExam } from 'app/redux/actions/ExamAction'
+import {
+    getPaidExam,
+    createPaidExam,
+    getPaidQuestion,
+} from 'app/redux/actions/ExamAction'
 
 const useStyles = makeStyles(({ palette, ...theme }) => ({
     root: {
@@ -61,14 +65,72 @@ const PaidExam = () => {
     const [open, setOpen] = React.useState(false)
 
     const exams = useSelector((state) => state.exam.exam)
+    const questions = useSelector((state) => state.exam.questions)
     console.log(exams)
     useEffect(() => {
         dispatch(getPaidExam('en'))
+        dispatch(getPaidQuestion('en'))
     }, [])
+
+    const [questionList, setQuestionList] = React.useState({
+        part1: [],
+        part2: [],
+        part3: [],
+    })
+
+    useEffect(() => {
+        if (questions) {
+            if (lang === '' || lang === 'en') {
+                setQuestionList({
+                    part1: questions.filter(
+                        (question) => question.part === 'part 1'
+                    ),
+                    part2: questions.filter(
+                        (question) => question.part === 'part 2'
+                    ),
+                    part3: questions.filter(
+                        (question) => question.part === 'part 3'
+                    ),
+                })
+            } else if (lang === 'ar') {
+                setQuestionList({
+                    part1: questions.filter(
+                        (question) => question.part === 'الجزء 1'
+                    ),
+                    part2: questions.filter(
+                        (question) => question.part === 'الجزء 2'
+                    ),
+                    part3: questions.filter(
+                        (question) => question.part === 'الجزء 3'
+                    ),
+                })
+            } else if (lang === 'nl') {
+                setQuestionList({
+                    part1: questions.filter(
+                        (question) => question.part === 'Deel 1'
+                    ),
+                    part2: questions.filter(
+                        (question) => question.part === 'Deel 2'
+                    ),
+                    part3: questions.filter(
+                        (question) => question.part === 'Deel 3'
+                    ),
+                })
+            }
+        }
+    }, [questions])
 
     const onExamCreate = () => {
         console.log(lang)
-        dispatch(createPaidExam(exam, setOpen, lang))
+        if (
+            questionList.part1.lenght > 25 &&
+            questionList.part2.lenght > 12 &&
+            questionList.part3.lenght > 28
+        ) {
+            dispatch(createPaidExam(exam, setOpen, lang))
+        } else {
+            alert('you must select 25 questions for each part')
+        }
     }
     const [language, setLanguage] = useState({
         isEnglish: true,
