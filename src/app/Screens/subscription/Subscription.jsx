@@ -585,19 +585,16 @@ const Subscription = () => {
                             disabled={
                                 packages.package_name === '' ||
                                 packages.price === '' ||
-                                packages.description.length === 0 ||
                                 packages.duration === '' ||
                                 packages.no_exam === '' ||
                                 packages.repeat === '' ||
                                 packages.langs.length === 0 ||
                                 packages.package_name_ar === '' ||
                                 packages.price_ar === '' ||
-                                packages.description_ar.length === 0 ||
                                 packages.duration_ar === '' ||
                                 packages.langs_ar.length === 0 ||
                                 packages.package_name_nl === '' ||
                                 packages.price_nl === '' ||
-                                packages.description_nl.length === 0 ||
                                 packages.duration_nl === '' ||
                                 packages.langs_nl.length === 0
                                     ? true
