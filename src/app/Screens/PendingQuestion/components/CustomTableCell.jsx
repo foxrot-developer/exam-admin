@@ -732,7 +732,7 @@ const CustomTableCell = ({
                 <IconButton
                     onClick={() => {
                         const data = new FormData()
-                        if (subscriber.draggable) {
+                        if (!subscriber.draggable) {
                             data.append('question', question.question)
                             data.append(
                                 'options',
@@ -771,8 +771,6 @@ const CustomTableCell = ({
                             data.append('reason_ar', question.reason_ar)
                             data.append('reason_nl', question.reason_nl)
                             data.append('draggable', subscriber.draggable)
-
-                            console.log(data)
                         } else {
                             data.append('question', question.question)
                             data.append(
@@ -823,7 +821,7 @@ const CustomTableCell = ({
                             data.append('draggable', subscriber.draggable)
                         }
                         if (type !== 'paid-question') {
-                            dispatch(createImproveFreeExam())
+                            dispatch(createImproveFreeExam(data))
                         } else {
                             dispatch(createImportPaidExam(data))
                         }
@@ -950,7 +948,7 @@ const CustomTableCell = ({
                             setEditMode(false)
                         }}
                     >
-                        <Icon>save</Icon>
+                        <Icon>save</Icon>2
                     </IconButton>
                 ) : (
                     <IconButton onClick={() => setEditMode(true)}>

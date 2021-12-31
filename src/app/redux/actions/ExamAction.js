@@ -118,7 +118,7 @@ export const createPaidExam = (exam, setOpen, lang) => (dispatch) => {
 }
 export const createImportPaidExam = (exam) => (dispatch) => {
     axiosInstance
-        .post('paid-exam/add-paid-exam', exam)
+        .post('paid-exam/add-paid-exam-question', exam)
         .then((res) => {
             Toast.success('Exam created successfully')
         })

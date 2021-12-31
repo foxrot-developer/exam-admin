@@ -92,6 +92,9 @@ const FreeExam = () => {
         options_nl: ['', '', ''],
         answer_nl: '',
         part_nl: '',
+        reason: '',
+        reason_ar: '',
+        reason_nl: '',
         image: null,
         draggable: false,
     })
@@ -109,6 +112,9 @@ const FreeExam = () => {
         answer_nl: [],
         part_nl: '',
         circles: [],
+        reason: '',
+        reason_ar: '',
+        reason_nl: '',
         image: null,
         draggable: true,
     })
@@ -182,6 +188,9 @@ const FreeExam = () => {
                 data.append('answer_nl', question.answer_nl)
                 data.append('part_nl', question.part_nl)
                 data.append('questionImage', question.image)
+                data.append('reason', question.reason)
+                data.append('reason_ar', question.reason_ar)
+                data.append('reason_nl', question.reason_nl)
                 data.append('draggable', question.draggable)
                 dispatch(createFreeExam(data, setOpen, setQuestion, lang))
             } else {
@@ -217,6 +226,9 @@ const FreeExam = () => {
                 )
                 data.append('part_nl', dragAndDropQuestion.part_nl)
                 data.append('questionImage', dragAndDropQuestion.image)
+                data.append('reason', dragAndDropQuestion.reason)
+                data.append('reason_ar', dragAndDropQuestion.reason_ar)
+                data.append('reason_nl', dragAndDropQuestion.reason_nl)
                 data.append('draggable', dragAndDropQuestion.draggable)
                 dispatch(
                     createFreeExam(
@@ -294,8 +306,6 @@ const FreeExam = () => {
             })
         }
     }
-
-    const [pendingOpen, setPendingOpen] = useState(false)
 
     return (
         <Box component="div" className={classes.root}>
@@ -631,6 +641,41 @@ const FreeExam = () => {
                                                 question.options_nl[1],
                                                 e.target.value,
                                             ],
+                                        })
+                                    }
+                                }}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <TextField
+                                margin="dense"
+                                fullWidth
+                                label="Reason"
+                                variant="outlined"
+                                required
+                                value={
+                                    language.isEnglish
+                                        ? question.reason
+                                        : language.isArabic
+                                        ? question.reason_ar
+                                        : question.reason_nl
+                                }
+                                onChange={(e) => {
+                                    if (language.isEnglish) {
+                                        setQuestion({
+                                            ...question,
+                                            reason: e.target.value,
+                                        })
+                                    } else if (language.isArabic) {
+                                        setQuestion({
+                                            ...question,
+                                            reason_ar: e.target.value,
+                                        })
+                                    } else if (language.isNetherlands) {
+                                        setQuestion({
+                                            ...question,
+                                            reason_nl: e.target.value,
                                         })
                                     }
                                 }}
