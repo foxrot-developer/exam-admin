@@ -102,7 +102,10 @@ const CustomTableCell = ({
     }
 
     const addCircle = (event) => {
-        if (circles.length < 3) {
+        if (
+            circles.length <
+            JSON.parse(subscriber.options).filter((a) => a).length
+        ) {
             let [x, y] = getClickCoords(event)
             let newCircle = (
                 <g id="UrTavla">
@@ -955,7 +958,9 @@ const CustomTableCell = ({
                         <Icon>edit</Icon>
                     </IconButton>
                 )}
-                <IconButton onClick={() => removeUser(index, subscriber.part)}>
+                <IconButton
+                    onClick={() => removeUser(subscriber.id, subscriber.part)}
+                >
                     <Icon>delete</Icon>
                 </IconButton>
             </TableCell>

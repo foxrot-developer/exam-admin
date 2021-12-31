@@ -195,28 +195,6 @@ const PendingQuestion = () => {
     }
     const [open, setOpen] = useState(false)
 
-    function downloadImage(url, name) {
-        fetch(url, {
-            method: 'GET',
-        })
-            .then((resp) => {
-                console.log(resp)
-                return resp.blob()
-            })
-            .then((blob) => {
-                // console.log(blob)
-                const url = window.URL.createObjectURL(blob)
-                const a = document.createElement('a')
-                a.style.display = 'none'
-                a.href = url
-                // the filename you want
-                a.download = name
-                document.body.appendChild(a)
-                a.click()
-                window.URL.revokeObjectURL(url)
-            })
-            .catch(() => alert('An error sorry'))
-    }
     const dispatch = useDispatch()
 
     return (
@@ -395,6 +373,7 @@ const PendingQuestion = () => {
                                     if (csvData.english.part1.length > 0) {
                                         for (let i = 0; i < 25; i++) {
                                             part1.push({
+                                                id: i,
                                                 question:
                                                     csvData.english.part1[i]
                                                         .question,
@@ -469,6 +448,7 @@ const PendingQuestion = () => {
                                         i++
                                     ) {
                                         part2.push({
+                                            id: i,
                                             question:
                                                 csvData.english.part2[i]
                                                     .question,
@@ -580,6 +560,7 @@ const PendingQuestion = () => {
                                         i++
                                     ) {
                                         part3.push({
+                                            id: i,
                                             question:
                                                 csvData.english.part3[i]
                                                     .question,
@@ -695,17 +676,17 @@ const PendingQuestion = () => {
                                     setOpen(false)
                                 }}
                                 variant="contained"
-                                // disabled={
-                                //     csvData.english.part1.length === 0 ||
-                                //     csvData.english.part2.length === 0 ||
-                                //     csvData.english.part3.length === 0 ||
-                                //     csvData.arabic.part1.length === 0 ||
-                                //     csvData.arabic.part2.length === 0 ||
-                                //     csvData.arabic.part3.length === 0 ||
-                                //     csvData.netherlands.part1.length === 0 ||
-                                //     csvData.netherlands.part2.length === 0 ||
-                                //     csvData.netherlands.part3.length === 0
-                                // }
+                                disabled={
+                                    csvData.english.part1.length === 0 ||
+                                    csvData.english.part2.length === 0 ||
+                                    csvData.english.part3.length === 0 ||
+                                    csvData.arabic.part1.length === 0 ||
+                                    csvData.arabic.part2.length === 0 ||
+                                    csvData.arabic.part3.length === 0 ||
+                                    csvData.netherlands.part1.length === 0 ||
+                                    csvData.netherlands.part2.length === 0 ||
+                                    csvData.netherlands.part3.length === 0
+                                }
                                 style={{
                                     backgroundColor: '#EEBC1D',
                                     fontWeight: '600',
@@ -750,6 +731,11 @@ const PendingQuestion = () => {
                     if (type !== 'paid-question')
                         dispatch(approveAllImportFreeExam(formData))
                     else dispatch(approveAllImportPaidExam(formData))
+                    setMainQuestion({
+                        part1: [],
+                        part2: [],
+                        part3: [],
+                    })
                 }}
                 title="Approve All"
             />
@@ -758,7 +744,6 @@ const PendingQuestion = () => {
                     data={mainQuestion.part1}
                     setData={setMainQuestion}
                     mainQuestion={mainQuestion}
-                    length={mainQuestion.part1.length}
                 />
             </SimpleCard>
             <SimpleCard title="Part 2">
@@ -766,7 +751,6 @@ const PendingQuestion = () => {
                     data={mainQuestion.part2}
                     setData={setMainQuestion}
                     mainQuestion={mainQuestion}
-                    length={mainQuestion.part2.length}
                 />
             </SimpleCard>
             <SimpleCard title="Part 3">
@@ -774,7 +758,6 @@ const PendingQuestion = () => {
                     data={mainQuestion.part3}
                     setData={setMainQuestion}
                     mainQuestion={mainQuestion}
-                    length={mainQuestion.part3.length}
                 />
             </SimpleCard>
         </Box>

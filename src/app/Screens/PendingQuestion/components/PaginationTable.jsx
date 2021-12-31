@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Table,
     TableHead,
@@ -12,9 +12,10 @@ import CustomTableCell from './CustomTableCell'
 import { createImproveFreeExam } from 'app/redux/actions/ExamAction'
 
 const PaginationTable = ({ data, setData, mainQuestion }) => {
-    const [rowsPerPage, setRowsPerPage] = React.useState(25)
-    const [page, setPage] = React.useState(0)
+    const [rowsPerPage, setRowsPerPage] = useState(25)
+    const [page, setPage] = useState(0)
     const dispatch = useDispatch()
+    const [part, setPart] = useState([])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage)
@@ -25,16 +26,24 @@ const PaginationTable = ({ data, setData, mainQuestion }) => {
         setPage(0)
     }
 
+    useEffect(() => {
+        setPart(data)
+    }, [data])
     const updateQuestion = (data) => {
         dispatch(createImproveFreeExam(data))
     }
-
-    const removeQuestion = (id, part) => {
+    console.log(mainQuestion)
+    const removeQuestion = (id, tempPart) => {
         const tempArray = mainQuestion
-        if (part === 'part 1') tempArray.part1.splice(id, 1)
-        else if (part === 'part 2') tempArray.part2.splice(id, 1)
-        else if (part === 'part 3') tempArray.part3.splice(id, 1)
-        console.log(tempArray)
+        if (tempPart === 'part 1') {
+            tempArray.part1 = tempArray.part1.filter((item) => item.id !== id)
+        } else if (tempPart === 'part 2') {
+            tempArray.part2 = tempArray.part2.filter((item) => item.id !== id)
+        } else if (tempPart === 'part 3') {
+            tempArray.part3 = tempArray.part3.filter((item) => item.id !== id)
+        }
+        setPart(part.filter((item) => item.id !== id))
+        console.log(tempArray, mainQuestion, part)
         setData(tempArray)
     }
 
@@ -58,16 +67,16 @@ const PaginationTable = ({ data, setData, mainQuestion }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data
+                    {part
                         .slice(
                             page * rowsPerPage,
                             page * rowsPerPage + rowsPerPage
                         )
                         .map((subscriber, index) => (
-                            <TableRow key={index}>
+                            <TableRow key={subscriber.id}>
                                 <CustomTableCell
                                     setData={setData}
-                                    key={index}
+                                    key={subscriber.id}
                                     index={index}
                                     data={data}
                                     mainQuestion={mainQuestion}
@@ -84,7 +93,7 @@ const PaginationTable = ({ data, setData, mainQuestion }) => {
                 className="px-4"
                 rowsPerPageOptions={[25]}
                 component="div"
-                count={data.length}
+                count={part.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 backIconButtonProps={{
