@@ -48,19 +48,14 @@ export const approveAllImportFreeExam = (formData) => (dispatch) => {
         .catch((err) => console.log(err))
 }
 
-export const approveAllImportPaidExam =
-    (questions, questionImages) => (dispatch) => {
-        axiosInstance
-
-            .post('paid-exam/approve-questions', {
-                questions,
-                questionImages,
-            })
-            .then((res) => {
-                Toast.success('Exam created successfully')
-            })
-            .catch((err) => console.log(err))
-    }
+export const approveAllImportPaidExam = (formData) => (dispatch) => {
+    axiosInstance
+        .post('paid-exam/approve-questions', formData)
+        .then((res) => {
+            Toast.success('Exam created successfully')
+        })
+        .catch((err) => console.log(err))
+}
 
 export const getFreeExam = (lang) => (dispatch) => {
     axiosInstance

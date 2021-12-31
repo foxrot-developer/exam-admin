@@ -15,6 +15,12 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import CustomModal from 'app/components/Custom/Modal'
+import { useDispatch } from 'react-redux'
+import {
+    createImportPaidExam,
+    createImproveFreeExam,
+} from 'app/redux/actions/ExamAction'
+import { useParams } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     input: {
@@ -58,12 +64,27 @@ const CustomTableCell = ({
     index,
     setData,
     data,
+    removeUser,
     mainQuestion,
 }) => {
     const classes = useStyles()
-    const [open, setOpen] = useState(false)
-
+    const dispatch = useDispatch()
     const [question, setQuestion] = useState({
+        question: subscriber.question,
+        question_ar: subscriber.question_ar,
+        question_nl: subscriber.question_nl,
+        optionA: JSON.parse(subscriber.options)[0],
+        optionB: JSON.parse(subscriber.options)[1],
+        optionC: JSON.parse(subscriber.options)[2],
+        optionA_ar: JSON.parse(subscriber.options_ar)[0],
+        optionB_ar: JSON.parse(subscriber.options_ar)[1],
+        optionC_ar: JSON.parse(subscriber.options_ar)[2],
+        optionA_nl: JSON.parse(subscriber.options_nl)[0],
+        optionB_nl: JSON.parse(subscriber.options_nl)[1],
+        optionC_nl: JSON.parse(subscriber.options_nl)[2],
+        reason: subscriber.reason,
+        reason_ar: subscriber.reason_ar,
+        reason_nl: subscriber.reason_nl,
         answer: '',
         answer_ar: '',
         answer_nl: '',
@@ -138,6 +159,8 @@ const CustomTableCell = ({
         }
     }
 
+    const { type } = useParams()
+
     const [isEditMode, setEditMode] = React.useState(false)
     const [dragAbleOpen, setDragAbleOpen] = React.useState(false)
     return (
@@ -159,7 +182,13 @@ const CustomTableCell = ({
                                     height: '550px',
                                     backgroundImage:
                                         question.image !== null &&
-                                        `url(${question.image})`,
+                                        `url(${
+                                            question.image !== ''
+                                                ? URL.createObjectURL(
+                                                      question.image
+                                                  )
+                                                : subscriber.image
+                                        })`,
                                     backgroundRepeat: 'no-repeat',
                                     backgroundPosition: 'center',
                                     backgroundColor: '#ccc',
@@ -305,25 +334,217 @@ const CustomTableCell = ({
                     />
                 </div>
             </TableCell>
-            <TableCell colSpan={2} className="px-0 " align="left">
-                <li>{subscriber.question}</li>
-                <li>{subscriber.question_ar}</li>
-                <li>{subscriber.question_nl}</li>
+            <TableCell className="px-0 " align="left">
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.question}
+                        name="English"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                question: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.question}</li>
+                )}
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.question_ar}
+                        name="Arabic"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                question_ar: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.question_ar}</li>
+                )}
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.question_nl}
+                        name="Dutch"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                question_nl: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.question_nl}</li>
+                )}
             </TableCell>
             <TableCell className="px-0 " align="left">
-                <li>{JSON.parse(subscriber.options)[0]}</li>
-                <li>{JSON.parse(subscriber.options_ar)[0]}</li>
-                <li>{JSON.parse(subscriber.options_nl)[0]}</li>
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.optionA}
+                        name="English"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                optionA: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.optionA}</li>
+                )}
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.optionA_ar}
+                        name="Arabic"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                optionA_ar: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.optionA_ar}</li>
+                )}
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.optionA_nl}
+                        name="Dutch"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                optionA_nl: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.optionA_nl}</li>
+                )}
             </TableCell>
             <TableCell className="px-0 " align="left">
-                <li>{JSON.parse(subscriber.options)[1]}</li>
-                <li>{JSON.parse(subscriber.options_ar)[1]}</li>
-                <li>{JSON.parse(subscriber.options_nl)[1]}</li>
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.optionB}
+                        name="English"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                optionB: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.optionB}</li>
+                )}
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.optionB_ar}
+                        name="Arabic"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                optionB_ar: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.optionB_ar}</li>
+                )}
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.optionB_nl}
+                        name="Dutch"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                optionB_nl: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.optionB_nl}</li>
+                )}
             </TableCell>
             <TableCell className="px-0 " align="left">
-                <li>{JSON.parse(subscriber.options)[2]}</li>
-                <li>{JSON.parse(subscriber.options_ar)[2]}</li>
-                <li>{JSON.parse(subscriber.options_nl)[2]}</li>
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.optionC}
+                        name="English"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                optionC: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.optionC}</li>
+                )}
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.optionC_ar}
+                        name="Arabic"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                optionC_ar: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.optionC_ar}</li>
+                )}
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.optionC_nl}
+                        name="Dutch"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                optionC_nl: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.optionC_nl}</li>
+                )}
             </TableCell>
             <TableCell className="px-0 " align="left">
                 {JSON.parse(subscriber.options)[0] === 1 ||
@@ -349,7 +570,11 @@ const CustomTableCell = ({
                             height: 'auto',
                             aspectRatio: 1,
                         }}
-                        onClick={() => setDragAbleOpen(true)}
+                        onClick={() => {
+                            if (question.image !== '') {
+                                setDragAbleOpen(true)
+                            }
+                        }}
                     />
                 ) : (
                     <FormControl fullWidth>
@@ -450,42 +675,289 @@ const CustomTableCell = ({
                     </FormControl>
                 )}
             </TableCell>
+            <TableCell className="px-0 " align="left">
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.reason}
+                        name="English"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                reason: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.reason}</li>
+                )}
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.reason_ar}
+                        name="Arabic"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                reason_ar: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.reason_ar}</li>
+                )}
+                {isEditMode ? (
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        value={question.reason_nl}
+                        name="Dutch"
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                reason_nl: e.target.value,
+                            })
+                        }}
+                        className={classes.input}
+                    />
+                ) : (
+                    <li>{question.reason_nl}</li>
+                )}
+            </TableCell>
             <TableCell align="center" className="px-0">
                 <IconButton
                     onClick={() => {
                         const data = new FormData()
-                        data.append('question', subscriber.question)
-                        data.append(
-                            'options',
-                            JSON.stringify(subscriber.options)
-                        )
-                        data.append('answer', subscriber.answer)
-                        data.append('part', subscriber.part)
-                        data.append('question_ar', subscriber.question_ar)
-                        data.append(
-                            'options_ar',
-                            JSON.stringify(subscriber.options_ar)
-                        )
-                        data.append('answer_ar', subscriber.answer_ar)
-                        data.append('part_ar', subscriber.part_ar)
-                        data.append('question_nl', subscriber.question_nl)
-                        data.append(
-                            'options_nl',
-                            JSON.stringify(subscriber.options_nl)
-                        )
-                        data.append('answer_nl', subscriber.answer_nl)
-                        data.append('part_nl', subscriber.part_nl)
-                        data.append('questionImage', question.image)
-                        // dispatch(createFreeExam())
-                        console.log(data)
+                        if (subscriber.draggable) {
+                            data.append('question', question.question)
+                            data.append(
+                                'options',
+                                JSON.stringify([
+                                    question.optionA,
+                                    question.optionB,
+                                    question.optionC,
+                                ])
+                            )
+                            data.append('answer', question.answer)
+                            data.append('part', subscriber.part)
+                            data.append('question_ar', question.question_ar)
+                            data.append(
+                                'options_ar',
+                                JSON.stringify([
+                                    question.optionA_ar,
+                                    question.optionB_ar,
+                                    question.optionC_ar,
+                                ])
+                            )
+                            data.append('answer_ar', question.answer_ar)
+                            data.append('part_ar', subscriber.part_ar)
+                            data.append('question_nl', question.question_nl)
+                            data.append(
+                                'options_nl',
+                                JSON.stringify([
+                                    question.optionA_nl,
+                                    question.optionB_nl,
+                                    question.optionC_nl,
+                                ])
+                            )
+                            data.append('answer_nl', question.answer_nl)
+                            data.append('part_nl', subscriber.part_nl)
+                            data.append('questionImage', question.image)
+                            data.append('reason', question.reason)
+                            data.append('reason_ar', question.reason_ar)
+                            data.append('reason_nl', question.reason_nl)
+                            data.append('draggable', subscriber.draggable)
+
+                            console.log(data)
+                        } else {
+                            data.append('question', question.question)
+                            data.append(
+                                'options',
+                                JSON.stringify([
+                                    question.optionA,
+                                    question.optionB,
+                                    question.optionC,
+                                ])
+                            )
+                            data.append(
+                                'answer',
+                                JSON.stringify(question.answer)
+                            )
+                            data.append('part', subscriber.part)
+                            data.append('question_ar', question.question_ar)
+                            data.append(
+                                'options_ar',
+                                JSON.stringify([
+                                    question.optionA_ar,
+                                    question.optionB_ar,
+                                    question.optionC_ar,
+                                ])
+                            )
+                            data.append(
+                                'answer_ar',
+                                JSON.stringify(question.answer_ar)
+                            )
+                            data.append('part_ar', subscriber.part_ar)
+                            data.append('question_nl', question.question_nl)
+                            data.append(
+                                'options_nl',
+                                JSON.stringify([
+                                    question.optionA_nl,
+                                    question.optionB_nl,
+                                    question.optionC_nl,
+                                ])
+                            )
+                            data.append(
+                                'answer_nl',
+                                JSON.stringify(question.answer_nl)
+                            )
+                            data.append('part_nl', subscriber.part_nl)
+                            data.append('questionImage', question.image)
+                            data.append('reason', question.reason)
+                            data.append('reason_ar', question.reason_ar)
+                            data.append('reason_nl', question.reason_nl)
+                            data.append('draggable', subscriber.draggable)
+                        }
+                        if (type !== 'paid-question') {
+                            dispatch(createImproveFreeExam())
+                        } else {
+                            dispatch(createImportPaidExam(data))
+                        }
                     }}
                 >
                     <Icon>done</Icon>
                 </IconButton>
-                <IconButton onClick={() => setOpen(true)}>
-                    <Icon>edit</Icon>
-                </IconButton>
-                <IconButton onClick={() => setOpen(true)}>
+                {isEditMode ? (
+                    <IconButton
+                        onClick={() => {
+                            const tempData = mainQuestion
+                            if (subscriber.part === 'part 1') {
+                                tempData.part1[index].question =
+                                    question.question
+                                tempData.part1[index].options = JSON.stringify([
+                                    question.optionA,
+                                    question.optionB,
+                                    question.optionC,
+                                ])
+                                tempData.part1[index].answer = question.answer
+                                tempData.part1[index].question_ar =
+                                    question.question_ar
+                                tempData.part1[index].options_ar =
+                                    JSON.stringify([
+                                        question.optionA_ar,
+                                        question.optionB_ar,
+                                        question.optionC_ar,
+                                    ])
+                                tempData.part1[index].answer_ar =
+                                    question.answer_ar
+                                tempData.part1[index].question_nl =
+                                    question.question_nl
+                                tempData.part1[index].options_nl =
+                                    JSON.stringify([
+                                        question.optionA_nl,
+                                        question.optionB_nl,
+                                        question.optionC_nl,
+                                    ])
+                                tempData.part1[index].answer_nl =
+                                    question.answer_nl
+                                tempData.part1[index].image = question.image
+                                tempData.part1[index].reason = question.reason
+                                tempData.part1[index].reason_ar =
+                                    question.reason_ar
+                                tempData.part1[index].reason_nl =
+                                    question.reason_nl
+                                tempData.part1[index].draggable =
+                                    subscriber.draggable
+                            } else if (subscriber.part === 'part 2') {
+                                tempData.part2[index].question =
+                                    question.question
+                                tempData.part2[index].options = JSON.stringify([
+                                    question.optionA,
+                                    question.optionB,
+                                    question.optionC,
+                                ])
+                                tempData.part2[index].answer = question.answer
+                                tempData.part2[index].question_ar =
+                                    question.question_ar
+                                tempData.part2[index].options_ar =
+                                    JSON.stringify([
+                                        question.optionA_ar,
+                                        question.optionB_ar,
+                                        question.optionC_ar,
+                                    ])
+                                tempData.part2[index].answer_ar =
+                                    question.answer_ar
+                                tempData.part2[index].question_nl =
+                                    question.question_nl
+                                tempData.part2[index].options_nl =
+                                    JSON.stringify([
+                                        question.optionA_nl,
+                                        question.optionB_nl,
+                                        question.optionC_nl,
+                                    ])
+                                tempData.part2[index].answer_nl =
+                                    question.answer_nl
+                                tempData.part2[index].image = question.image
+                                tempData.part2[index].reason = question.reason
+                                tempData.part2[index].reason_ar =
+                                    question.reason_ar
+                                tempData.part2[index].reason_nl =
+                                    question.reason_nl
+                                tempData.part2[index].draggable =
+                                    subscriber.draggable
+                            } else if (subscriber.part === 'part 3') {
+                                tempData.part3[index].question =
+                                    question.question
+                                tempData.part3[index].options = JSON.stringify([
+                                    question.optionA,
+                                    question.optionB,
+                                    question.optionC,
+                                ])
+                                tempData.part3[index].answer = question.answer
+                                tempData.part3[index].question_ar =
+                                    question.question_ar
+                                tempData.part3[index].options_ar =
+                                    JSON.stringify([
+                                        question.optionA_ar,
+                                        question.optionB_ar,
+                                        question.optionC_ar,
+                                    ])
+                                tempData.part3[index].answer_ar =
+                                    question.answer_ar
+                                tempData.part3[index].question_nl =
+                                    question.question_nl
+                                tempData.part3[index].options_nl =
+                                    JSON.stringify([
+                                        question.optionA_nl,
+                                        question.optionB_nl,
+                                        question.optionC_nl,
+                                    ])
+                                tempData.part3[index].answer_nl =
+                                    question.answer_nl
+                                tempData.part3[index].image = question.image
+                                tempData.part3[index].reason = question.reason
+                                tempData.part3[index].reason_ar =
+                                    question.reason_ar
+                                tempData.part3[index].reason_nl =
+                                    question.reason_nl
+                                tempData.part3[index].draggable =
+                                    subscriber.draggable
+                            }
+                            setEditMode(false)
+                        }}
+                    >
+                        <Icon>save</Icon>
+                    </IconButton>
+                ) : (
+                    <IconButton onClick={() => setEditMode(true)}>
+                        <Icon>edit</Icon>
+                    </IconButton>
+                )}
+                <IconButton onClick={() => removeUser(index, subscriber.part)}>
                     <Icon>delete</Icon>
                 </IconButton>
             </TableCell>
