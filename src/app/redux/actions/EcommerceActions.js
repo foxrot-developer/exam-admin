@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Toast from 'Toast'
 
 export const GET_PRODUCT_LIST = 'GET_PRODUCT_LIST'
 export const GET_CART_LIST = 'GET_CART_LIST'
@@ -59,6 +60,7 @@ export const getCartList = (uid) => (dispatch) => {
 export const addProductToCart = (uid, productId) => (dispatch) => {
     axios.post('/api/ecommerce/add-to-cart', { uid, productId }).then((res) => {
         console.log(res.data)
+        Toast.success('Product added to cart')
         dispatch({
             type: ADD_PRODUCT_TO_CART,
             payload: res.data,

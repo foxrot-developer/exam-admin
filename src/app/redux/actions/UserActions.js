@@ -1,3 +1,4 @@
+import Toast from 'Toast'
 import axiosInstance from '../../../axios'
 
 export const GET_USER_LIST = 'GET_USER_LIST'
@@ -18,12 +19,14 @@ export const getUserList = () => (dispatch) => {
 
 export const deleteUser = (id) => (dispatch) => {
     axiosInstance.delete(`admin/delete-user/${id}`).then((res) => {
+        Toast.success('User deleted successfully')
         dispatch(getUserList())
     })
 }
 
 export const updateUser = (id, data) => (dispatch) => {
     axiosInstance.patch(`admin/update-user/${id}`, data).then((res) => {
+        Toast.success('User updated successfully')
         dispatch(getUserList())
     })
 }
@@ -32,6 +35,7 @@ export const createUser = (data, setOpen) => (dispatch) => {
     axiosInstance
         .post('admin/register-user', data)
         .then((res) => {
+            Toast.success('User created successfully')
             dispatch(getUserList())
             setOpen(false)
         })
@@ -55,6 +59,7 @@ export const blockPayment = (id, status) => (dispatch) => {
     axiosInstance
         .patch(`admin/active-payment/${id}`, { active: status })
         .then((res) => {
+            Toast.success('Payment Block successfully')
             dispatch(getUserList())
         })
         .catch((err) => {
@@ -80,6 +85,7 @@ export const disablePayment = (id, status) => (dispatch) => {
     axiosInstance
         .patch(`admin/active-payment/${id}`, { active: status })
         .then(() => {
+            Toast.success('Payment disabled successfully')
             dispatch(getAllPayment())
         })
         .catch((err) => {
@@ -91,6 +97,7 @@ export const updateDetail = (data, setOpen) => (dispatch) => {
     axiosInstance
         .patch(`admin/update-web-profile/61b6f6e84cb6e87df531d81c`, data)
         .then((res) => {
+            Toast.success('Details updated successfully')
             setOpen(false)
             dispatch(getContentEn())
             dispatch(getContentAr())
@@ -105,6 +112,7 @@ export const resetUserPassword = (id, data, setOpen) => (dispatch) => {
     axiosInstance
         .patch(`admin/reset-user-password/${id}`, data)
         .then((res) => {
+            Toast.success('Password reset successfully')
             dispatch(getUserList())
             setOpen(false)
         })
@@ -169,6 +177,7 @@ export const updateHeroSection = (data, setOpen) => (dispatch) => {
     axiosInstance
         .patch(`admin/hero-update/61c5d4f9dbe9259cdf13b541`, data)
         .then((res) => {
+            Toast.success('Hero section updated successfully')
             setOpen(false)
             dispatch(getContentEn())
             dispatch(getContentAr())
@@ -182,6 +191,7 @@ export const updateAboutSection = (data, setOpen) => (dispatch) => {
     axiosInstance
         .patch(`admin/about-update/61c5d4f9dbe9259cdf13b541`, data)
         .then((res) => {
+            Toast.success('About section updated successfully')
             setOpen(false)
             dispatch(getContentEn())
             dispatch(getContentAr())
@@ -196,6 +206,7 @@ export const updateFooter = (data, setOpen) => (dispatch) => {
     axiosInstance
         .patch(`admin/footer-update/61c5d4f9dbe9259cdf13b541`, data)
         .then((res) => {
+            Toast.success('Footer section updated successfully')
             setOpen(false)
             dispatch(getContentEn())
             dispatch(getContentAr())
@@ -210,6 +221,7 @@ export const updateContactSection = (data, setOpen) => (dispatch) => {
     axiosInstance
         .patch(`admin/contact-update/61c5d4f9dbe9259cdf13b541`, data)
         .then((res) => {
+            Toast.success('Contact section updated successfully')
             setOpen(false)
             dispatch(getContentEn())
             dispatch(getContentAr())
@@ -224,6 +236,7 @@ export const updateLanguage = (data, setOpen) => (dispatch) => {
     axiosInstance
         .patch(`admin/language-update/61c5d4f9dbe9259cdf13b541`, data)
         .then((res) => {
+            Toast.success('Language updated successfully')
             setOpen(false)
             dispatch(getContentEn())
             dispatch(getContentAr())
@@ -238,6 +251,7 @@ export const updatePackageSection = (data, setOpen) => (dispatch) => {
     axiosInstance
         .patch(`admin/package-update/61c5d4f9dbe9259cdf13b541`, data)
         .then((res) => {
+            Toast.success('Package section updated successfully')
             setOpen(false)
             dispatch(getContentEn())
             dispatch(getContentAr())
@@ -266,6 +280,7 @@ export const updateEmailTemplate = (data) => (dispatch) => {
     axiosInstance
         .patch(`admin/email-template`, data)
         .then((res) => {
+            Toast.success('Email template updated successfully')
             dispatch(getEmailTemplate())
         })
         .catch((err) => {

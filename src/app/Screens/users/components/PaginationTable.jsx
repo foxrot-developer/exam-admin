@@ -73,7 +73,7 @@ const PaginationTable = ({ data }) => {
                             page * rowsPerPage + rowsPerPage
                         )
                         .map((subscriber, index) => (
-                            <TableRow key={index}>
+                            <TableRow key={subscriber.id}>
                                 <CustomTableCell
                                     subscriber={subscriber}
                                     removeUser={removeUser}

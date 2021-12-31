@@ -1,3 +1,4 @@
+import Toast from 'Toast'
 import axiosInstance from '../../../axios'
 export const GET_ALL_PACKAGES = 'GET_ALL_PACKAGES'
 
@@ -19,6 +20,7 @@ export const getPackageList = (lang) => (dispatch) => {
 
 export const deletePackage = (id, lang) => (dispatch) => {
     axiosInstance.delete(`admin/delete-package/${id}`).then((res) => {
+        Toast.success('Package deleted successfully')
         dispatch(getPackageList(lang))
     })
 }
@@ -29,6 +31,7 @@ export const createPackage = (data, setOpen, lang) => (dispatch) => {
         .then((res) => {
             console.log(res)
             setOpen(false)
+            Toast.success('Package created successfully')
             dispatch(getPackageList(lang))
         })
         .catch((err) => {
@@ -39,6 +42,7 @@ export const updatePackage = (id, data, setOpen, lang) => (dispatch) => {
     axiosInstance
         .patch(`admin/edit-package/${id}`, data)
         .then((res) => {
+            Toast.success('Package updated successfully')
             dispatch(getPackageList(lang))
             setOpen(false)
         })

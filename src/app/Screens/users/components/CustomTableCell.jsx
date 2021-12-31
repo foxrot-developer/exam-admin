@@ -55,7 +55,7 @@ const CustomTableCell = ({
                             <TextField
                                 margin="dense"
                                 fullWidth
-                                label="Description"
+                                label="Password"
                                 variant="outlined"
                                 required
                                 value={password}

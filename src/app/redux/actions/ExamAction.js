@@ -1,3 +1,4 @@
+import Toast from 'Toast'
 import axiosInstance from '../../../axios'
 export const GET_QUESTION = 'GET_QUESTION'
 export const GET_PAID_EXAM = 'GET_PAID_EXAM'
@@ -24,7 +25,39 @@ export const createFreeExam =
                     part_nl: '',
                     image: null,
                 })
+                Toast.success('Exam created successfully')
                 dispatch(getFreeExam(lang))
+            })
+            .catch((err) => console.log(err))
+    }
+
+export const createImproveFreeExam = (exam) => (dispatch) => {
+    axiosInstance
+        .post('free-exam/create-free-exam', exam)
+        .then((res) => {
+            Toast.success('Exam created successfully')
+        })
+        .catch((err) => console.log(err))
+}
+export const approveAllImportFreeExam = (formData) => (dispatch) => {
+    axiosInstance
+        .post('free-exam/free-approve-questions', formData)
+        .then(() => {
+            Toast.success('Exam created successfully')
+        })
+        .catch((err) => console.log(err))
+}
+
+export const approveAllImportPaidExam =
+    (questions, questionImages) => (dispatch) => {
+        axiosInstance
+
+            .post('paid-exam/approve-questions', {
+                questions,
+                questionImages,
+            })
+            .then((res) => {
+                Toast.success('Exam created successfully')
             })
             .catch((err) => console.log(err))
     }
@@ -57,6 +90,7 @@ export const updateFreeExam = (exam, id, setEditMode, lang) => (dispatch) => {
         .patch(`free-exam/edit-question/${id}`, exam)
         .then(() => {
             setEditMode(false)
+            Toast.success('Question updated successfully')
             dispatch(getFreeExam(lang))
         })
         .catch((err) => console.log(err))
@@ -67,6 +101,7 @@ export const deleteFreeExam = (id, lang) => (dispatch) => {
     axiosInstance
         .delete(`free-exam/delete-question/${id}`)
         .then(() => {
+            Toast.success('Question deleted successfully')
             dispatch(getFreeExam(lang))
         })
         .catch((err) => console.log(err))
@@ -77,11 +112,20 @@ export const createPaidExam = (exam, setOpen, lang) => (dispatch) => {
         .post('paid-exam/add-paid-exam', exam)
         .then((res) => {
             setOpen(false)
+            Toast.success('Exam created successfully')
             if (lang === '') {
                 dispatch(getPaidExam('en'))
             } else {
                 dispatch(getPaidExam(lang))
             }
+        })
+        .catch((err) => console.log(err))
+}
+export const createImportPaidExam = (exam) => (dispatch) => {
+    axiosInstance
+        .post('paid-exam/add-paid-exam', exam)
+        .then((res) => {
+            Toast.success('Exam created successfully')
         })
         .catch((err) => console.log(err))
 }
@@ -115,6 +159,7 @@ export const updatePaidExam = (id, exam, setEditMode, lang) => (dispatch) => {
             },
         })
         .then(() => {
+            Toast.success('Exam updated successfully')
             setEditMode(false)
             dispatch(getPaidExam(lang))
         })
@@ -126,6 +171,7 @@ export const deletePaidExam = (id, lang) => (dispatch) => {
     axiosInstance
         .delete(`paid-exam/delete-paid-exam/${id}`)
         .then(() => {
+            Toast.success('Exam deleted successfully')
             dispatch(getPaidExam(lang))
         })
         .catch((err) => console.log(err))
@@ -154,6 +200,7 @@ export const createPaidExamQuestion =
                     image: null,
                 })
                 setCircles([])
+                Toast.success('Question added successfully')
                 dispatch(getPaidQuestion(lang))
             })
             .catch((err) => console.log(err))
@@ -208,6 +255,7 @@ export const updatePaidQuestion =
             .patch(`paid-exam/edit-paid-exam-question/${id}`, exam)
             .then(() => {
                 setEditMode(false)
+                Toast.success('Question updated successfully')
                 dispatch(getPaidQuestion(lang))
             })
             .catch((err) => console.log(err))
@@ -217,6 +265,7 @@ export const deletePaidQuestion = (id, lang) => (dispatch) => {
     axiosInstance
         .delete(`paid-exam/delete-paid-exam-question/${id}`)
         .then(() => {
+            Toast.success('Question deleted successfully')
             dispatch(getPaidQuestion(lang))
         })
         .catch((err) => console.log(err))

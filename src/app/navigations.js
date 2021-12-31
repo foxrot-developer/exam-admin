@@ -10,6 +10,11 @@ export const navigations = [
         icon: 'email',
     },
     {
+        name: 'Import Free Questions',
+        path: '/dashboard/import/:type',
+        icon: 'question_mark',
+    },
+    {
         label: 'Website Content',
         type: 'label',
     },

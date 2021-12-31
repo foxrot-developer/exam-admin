@@ -80,6 +80,13 @@ const dashboardRoutes = [
         auth: authRoles.sa,
     },
     {
+        path: '/dashboard/import/:type',
+        component: React.lazy(() =>
+            import('../PendingQuestion/PendingQuestion')
+        ),
+        auth: authRoles.sa,
+    },
+    {
         path: '/dashboard/language-section',
         component: React.lazy(() => import('../WebContent/LanguageSection')),
         auth: authRoles.sa,

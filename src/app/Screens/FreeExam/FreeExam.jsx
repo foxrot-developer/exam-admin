@@ -13,6 +13,7 @@ import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import { createFreeExam, getFreeExam } from 'app/redux/actions/ExamAction'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(({ palette, ...theme }) => ({
     root: {
@@ -57,6 +58,7 @@ const useStyles = makeStyles(({ palette, ...theme }) => ({
 
 const FreeExam = () => {
     const dispatch = useDispatch()
+    const navigation = useHistory()
     const classes = useStyles()
     const [open, setOpen] = useState(false)
     const [questionList, setQuestionList] = useState({
@@ -292,6 +294,8 @@ const FreeExam = () => {
             })
         }
     }
+
+    const [pendingOpen, setPendingOpen] = useState(false)
 
     return (
         <Box component="div" className={classes.root}>
@@ -1296,6 +1300,12 @@ const FreeExam = () => {
                             setDragAbleOpen(true)
                         }}
                         title="Create DragAble Question"
+                    />
+                    <CustomButton
+                        eventHandler={() => {
+                            navigation.push('/dashboard/import/free-exam')
+                        }}
+                        title="Import Questions"
                     />
                 </Box>
             </Box>

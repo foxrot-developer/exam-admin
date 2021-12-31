@@ -16,6 +16,7 @@ import {
     getPaidQuestion,
 } from 'app/redux/actions/ExamAction'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(({ palette, ...theme }) => ({
     root: {
@@ -305,6 +306,8 @@ const PaidQuestion = () => {
             })
         }
     }
+
+    const navigation = useHistory()
 
     return (
         <Box component="div" className={classes.root}>
@@ -1279,6 +1282,12 @@ const PaidQuestion = () => {
                             setDragAbleOpen(true)
                         }}
                         title="Create DragAble Question"
+                    />
+                    <CustomButton
+                        eventHandler={() => {
+                            navigation.push('/dashboard/import/paid-question')
+                        }}
+                        title="Import Questions"
                     />
                 </Box>
             </Box>

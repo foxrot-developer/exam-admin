@@ -23,6 +23,7 @@ import {
     createPaidExam,
     getPaidQuestion,
 } from 'app/redux/actions/ExamAction'
+import Toast from 'Toast'
 
 const useStyles = makeStyles(({ palette, ...theme }) => ({
     root: {
@@ -128,8 +129,12 @@ const PaidExam = () => {
             questionList.part3.lenght > 28
         ) {
             dispatch(createPaidExam(exam, setOpen, lang))
-        } else {
-            alert('you must select 25 questions for each part')
+        } else if (questionList.part1.length > 25) {
+            Toast.error('Questions in part 1 must be less than 25')
+        } else if (questionList.part2.length > 12) {
+            Toast.error('Questions in part 2 must be less than 12')
+        } else if (questionList.part3.length > 28) {
+            Toast.error('Questions in part 3 must be less than 28')
         }
     }
     const [language, setLanguage] = useState({
@@ -146,7 +151,9 @@ const PaidExam = () => {
         name_nl: '',
         description_nl: '',
     })
+
     const [lang, setLang] = useState('en')
+
     return (
         <Box component="div" className={classes.root}>
             <Box component="div" mb={4} className={classes.btnRoot}>

@@ -1,5 +1,5 @@
 import axiosInstance from '../../../axios'
-
+import Toast from 'Toast'
 export const ADMIN_LOGIN = 'ADMIN_LOGIN'
 
 export const login = (data, history, setMessage, setLoading) => (dispatch) => {
@@ -11,6 +11,7 @@ export const login = (data, history, setMessage, setLoading) => (dispatch) => {
                 type: ADMIN_LOGIN,
                 payload: res.data,
             })
+            Toast.success('Login Successful')
             history.push('/dashboard')
         })
         .catch((err) => {
@@ -27,6 +28,7 @@ export const updatePassword =
         axiosInstance
             .patch(`admin/update-password/${id}`, data)
             .then((res) => {
+                Toast.success('Password updated successfully')
                 setchangePassOpen(false)
             })
             .catch((err) => {
@@ -41,8 +43,8 @@ export const updateProfile =
         axiosInstance
             .patch(`admin/update-profile/${id}`, data)
             .then((res) => {
+                Toast.success('Profile updated successfully')
                 setOpen(false)
-                console.log(res)
             })
             .catch((err) => {
                 console.log(err)
