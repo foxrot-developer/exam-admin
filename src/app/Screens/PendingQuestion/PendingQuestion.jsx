@@ -481,11 +481,17 @@ const PendingQuestion = () => {
                                                         ''
                                                     )
                                                     .trim(),
-                                            reason_ar: csvData.arabic.part2[
-                                                i
-                                            ].reason_ar
-                                                .replace(/(\r\n|\n|\r)/gm, '')
-                                                .trim(),
+                                            reason_ar: csvData.arabic.part2[i]
+                                                .reason_ar
+                                                ? csvData.arabic.part2[
+                                                      i
+                                                  ].reason_ar
+                                                      .replace(
+                                                          /(\r\n|\n|\r)/gm,
+                                                          ''
+                                                      )
+                                                      .trim()
+                                                : '',
                                             part: englishPart[1],
                                             question_ar:
                                                 csvData.arabic.part2[i]
@@ -594,11 +600,17 @@ const PendingQuestion = () => {
                                                         ''
                                                     )
                                                     .trim(),
-                                            reason_ar: csvData.arabic.part3[
-                                                i
-                                            ].reason_ar
-                                                .replace(/(\r\n|\n|\r)/gm, '')
-                                                .trim(),
+                                            reason_ar: csvData.arabic.part3[i]
+                                                .reason_ar
+                                                ? csvData.arabic.part3[
+                                                      i
+                                                  ].reason_ar
+                                                      .replace(
+                                                          /(\r\n|\n|\r)/gm,
+                                                          ''
+                                                      )
+                                                      .trim()
+                                                : '',
                                             question_ar:
                                                 csvData.arabic.part3[i]
                                                     .question_ar,
@@ -676,17 +688,17 @@ const PendingQuestion = () => {
                                     setOpen(false)
                                 }}
                                 variant="contained"
-                                disabled={
-                                    csvData.english.part1.length === 0 ||
-                                    csvData.english.part2.length === 0 ||
-                                    csvData.english.part3.length === 0 ||
-                                    csvData.arabic.part1.length === 0 ||
-                                    csvData.arabic.part2.length === 0 ||
-                                    csvData.arabic.part3.length === 0 ||
-                                    csvData.netherlands.part1.length === 0 ||
-                                    csvData.netherlands.part2.length === 0 ||
-                                    csvData.netherlands.part3.length === 0
-                                }
+                                // disabled={
+                                //     csvData.english.part1.length === 0 ||
+                                //     csvData.english.part2.length === 0 ||
+                                //     csvData.english.part3.length === 0 ||
+                                //     csvData.arabic.part1.length === 0 ||
+                                //     csvData.arabic.part2.length === 0 ||
+                                //     csvData.arabic.part3.length === 0 ||
+                                //     csvData.netherlands.part1.length === 0 ||
+                                //     csvData.netherlands.part2.length === 0 ||
+                                //     csvData.netherlands.part3.length === 0
+                                // }
                                 style={{
                                     backgroundColor: '#EEBC1D',
                                     fontWeight: '600',
@@ -727,10 +739,12 @@ const PendingQuestion = () => {
                         ...mainQuestion.part2,
                         ...mainQuestion.part3,
                     ]
+                    console.log(allQuestion)
                     formData.append('questions', JSON.stringify(allQuestion))
-                    if (type !== 'paid-question')
-                        dispatch(approveAllImportFreeExam(formData))
-                    else dispatch(approveAllImportPaidExam(formData))
+                    // if (type !== 'paid-question')
+                    // dispatch(approveAllImportFreeExam(formData))
+                    // else
+                    dispatch(approveAllImportPaidExam(formData))
                     setMainQuestion({
                         part1: [],
                         part2: [],

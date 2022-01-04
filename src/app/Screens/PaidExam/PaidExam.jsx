@@ -67,7 +67,6 @@ const PaidExam = () => {
 
     const exams = useSelector((state) => state.exam.exam)
     const questions = useSelector((state) => state.exam.questions)
-    console.log(exams)
     useEffect(() => {
         dispatch(getPaidExam('en'))
         dispatch(getPaidQuestion('en'))
@@ -122,11 +121,16 @@ const PaidExam = () => {
     }, [questions])
 
     const onExamCreate = () => {
-        console.log(lang)
+        console.log(
+            lang,
+            questionList.part1.length,
+            questionList.part2.length,
+            questionList.part3.length
+        )
         if (
-            questionList.part1.lenght > 25 &&
-            questionList.part2.lenght > 12 &&
-            questionList.part3.lenght > 28
+            questionList.part1.length >= 25 &&
+            questionList.part2.length >= 12 &&
+            questionList.part3.length >= 28
         ) {
             dispatch(createPaidExam(exam, setOpen, lang))
         } else if (questionList.part1.length < 25) {

@@ -12,7 +12,7 @@ import CustomTableCell from './CustomTableCell'
 import { createImproveFreeExam } from 'app/redux/actions/ExamAction'
 
 const PaginationTable = ({ data, setData, mainQuestion }) => {
-    const [rowsPerPage, setRowsPerPage] = useState(25)
+    const [rowsPerPage, setRowsPerPage] = useState(30)
     const [page, setPage] = useState(0)
     const dispatch = useDispatch()
     const [part, setPart] = useState([])

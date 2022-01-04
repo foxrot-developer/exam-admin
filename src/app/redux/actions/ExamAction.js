@@ -52,9 +52,26 @@ export const approveAllImportPaidExam = (formData) => (dispatch) => {
     axiosInstance
         .post('paid-exam/approve-questions', formData)
         .then((res) => {
-            Toast.success('Exam created successfully')
+            Toast.success(res.data.message)
         })
         .catch((err) => console.log(err))
+}
+
+export const isFreeExam = (lang, examId) => (dispatch) => {
+    axiosInstance
+        .get('free-exam', {
+            headers: {
+                lang: lang,
+            },
+        })
+        .then((res) => {})
+        .catch((err) => {
+            console.log(err)
+            dispatch({
+                type: GET_QUESTION,
+                payload: [],
+            })
+        })
 }
 
 export const getFreeExam = (lang) => (dispatch) => {
@@ -68,7 +85,7 @@ export const getFreeExam = (lang) => (dispatch) => {
             console.log(res.data)
             dispatch({
                 type: GET_QUESTION,
-                payload: res.data.questions,
+                payload: res.data.free_questions,
             })
         })
         .catch((err) => {
@@ -288,4 +305,19 @@ export const getAllPaidExamResult = (lang) => (dispatch) => {
                 payload: [],
             })
         )
+}
+
+export const makeFreeExam = (exam, setOpen, lang) => (dispatch) => {
+    axiosInstance
+        .post(`free-exam/select-free-exam/${exam}`)
+        .then((res) => {
+            setOpen(false)
+            Toast.success(res.data.message)
+            if (lang === '') {
+                dispatch(getPaidExam('en'))
+            } else {
+                dispatch(getPaidExam(lang))
+            }
+        })
+        .catch((err) => console.log(err))
 }

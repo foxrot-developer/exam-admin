@@ -38,17 +38,18 @@ const PaginationTable = ({ data, lang }) => {
 
     return (
         <div className="w-full " style={{ overflowX: 'auto' }}>
-            <Table style={{ minWidth: 700 }} className="whitespace-pre">
+            <Table style={{ minWidth: 1000 }} className="whitespace-pre">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Part</TableCell>
-                        <TableCell>Image</TableCell>
-                        <TableCell colSpan={2}>Question</TableCell>
-                        <TableCell>Option A </TableCell>
-                        <TableCell>Option B</TableCell>
-                        <TableCell>Option C</TableCell>
-                        <TableCell>Answer</TableCell>
-                        <TableCell>Actions</TableCell>
+                        <TableCell width={100}>Part</TableCell>
+                        <TableCell width={150}>Image</TableCell>
+                        <TableCell width={500}>Question</TableCell>
+                        <TableCell width={200}>Option A </TableCell>
+                        <TableCell width={200}>Option B</TableCell>
+                        <TableCell width={200}>Option C</TableCell>
+                        <TableCell width={200}>Answer</TableCell>
+                        <TableCell width={500}>Reason</TableCell>
+                        <TableCell width={200}>Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

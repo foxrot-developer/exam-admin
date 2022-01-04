@@ -10,11 +10,14 @@ import {
     Typography,
     Box,
     Button,
+    Switch,
 } from '@material-ui/core'
 import { ArrowForward } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import CustomModal from 'app/components/Custom/Modal'
 import FormControl from '@mui/material/FormControl'
+import { makeFreeExam } from 'app/redux/actions/ExamAction'
+import { useDispatch } from 'react-redux'
 
 const useStyles = makeStyles(({ palette, ...theme }) => ({
     input: {
@@ -54,6 +57,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
         name: subscriber.name,
     }
     const [open, setOpen] = React.useState(false)
+    const dispatch = useDispatch()
 
     const [language, setLanguage] = useState({
         isEnglish: true,
@@ -333,6 +337,15 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                 >
                     <Icon>delete</Icon>
                 </IconButton>
+                <Switch
+                    checked={subscriber.active}
+                    onChange={(e) => {
+                        if (lang === 'en') {
+                            dispatch(makeFreeExam(subscriber.id))
+                        } else {
+                        }
+                    }}
+                />
                 <Link
                     to={`/dashboard/paid-exams/questions/${subscriber.id}/${lang}`}
                 >

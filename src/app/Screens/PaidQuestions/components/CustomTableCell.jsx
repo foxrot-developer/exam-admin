@@ -63,6 +63,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
         answer: subscriber.answer,
         options: JSON.parse(subscriber.options),
         part: subscriber.part,
+        reason: subscriber.reason,
     }
 
     const [language, setLanguage] = useState({
@@ -84,6 +85,9 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
         options_nl: ['', '', ''],
         answer_nl: '',
         part_nl: '',
+        reason: '',
+        reason_ar: '',
+        reason_nl: '',
         image: null,
     })
 
@@ -112,6 +116,9 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                 options_nl: ['', '', ''],
                 answer_nl: '',
                 part_nl: netherlandsPart[index],
+                reason: subscriber.reason,
+                reason_ar: '',
+                reason_nl: '',
                 image:
                     'https://examin-education.herokuapp.com/' +
                     subscriber.questionImage,
@@ -137,6 +144,9 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                 options_nl: ['', '', ''],
                 answer_nl: '',
                 part_nl: netherlandsPart[index],
+                reason: '',
+                reason_ar: subscriber.reason,
+                reason_nl: '',
                 image:
                     'https://examin-education.herokuapp.com/' +
                     subscriber.questionImage,
@@ -162,6 +172,9 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                 options_nl: JSON.parse(subscriber.options),
                 answer_nl: subscriber.answer,
                 part_nl: netherlandsPart[index],
+                reason: '',
+                reason_ar: '',
+                reason_nl: subscriber.reason,
                 image:
                     'https://examin-education.herokuapp.com/' +
                     subscriber.questionImage,
@@ -179,7 +192,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                 Update Question
                             </Typography>
                         </Grid>
-                        {/* <Grid item xs={12}>
+                        <Grid item xs={12}>
                             <TextField
                                 margin="dense"
                                 fullWidth
@@ -194,7 +207,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                     })
                                 }}
                             />
-                        </Grid> */}
+                        </Grid>
                         <Grid item xs={12}>
                             <Box
                                 component="div"
@@ -583,59 +596,100 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                 </Select>
                             </FormControl>
                         </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                margin="dense"
+                                fullWidth
+                                label="Reason"
+                                variant="outlined"
+                                required
+                                value={
+                                    language.isEnglish
+                                        ? question.reason
+                                        : language.isArabic
+                                        ? question.reason_ar
+                                        : question.reason_nl
+                                }
+                                onChange={(e) => {
+                                    if (language.isEnglish) {
+                                        setQuestion({
+                                            ...question,
+                                            reason: e.target.value,
+                                        })
+                                    } else if (language.isArabic) {
+                                        setQuestion({
+                                            ...question,
+                                            reason_ar: e.target.value,
+                                        })
+                                    } else if (language.isNetherlands) {
+                                        setQuestion({
+                                            ...question,
+                                            reason_nl: e.target.value,
+                                        })
+                                    }
+                                }}
+                            />
+                        </Grid>
                         <Box component="div" className={classes.modalContent}>
                             <Button
                                 onClick={() => {
-                                    // const data = new FormData()
-                                    // data.append('question', question.question)
-                                    // data.append(
-                                    //     'options',
-                                    //     JSON.stringify(question.options)
-                                    // )
-                                    // data.append('answer', question.answer)
-                                    // data.append('part', question.part)
-                                    // data.append(
-                                    //     'question_ar',
-                                    //     question.question_ar
-                                    // )
-                                    // data.append(
-                                    //     'options_ar',
-                                    //     JSON.stringify(question.options_ar)
-                                    // )
-                                    // data.append('answer_ar', question.answer_ar)
-                                    // data.append('part_ar', question.part_ar)
-                                    // data.append(
-                                    //     'question_nl',
-                                    //     question.question_nl
-                                    // )
-                                    // data.append(
-                                    //     'options_nl',
-                                    //     JSON.stringify(question.options_nl)
-                                    // )
-                                    // data.append('answer_nl', question.answer_nl)
-                                    // data.append('part_nl', question.part_nl)
-                                    // data.append('questionImage', question.image)
+                                    const data = new FormData()
+                                    data.append('question', question.question)
+                                    data.append(
+                                        'options',
+                                        JSON.stringify(question.options)
+                                    )
+                                    data.append('answer', question.answer)
+                                    data.append('part', question.part)
+                                    data.append(
+                                        'question_ar',
+                                        question.question_ar
+                                    )
+                                    data.append(
+                                        'options_ar',
+                                        JSON.stringify(question.options_ar)
+                                    )
+                                    data.append('answer_ar', question.answer_ar)
+                                    data.append('part_ar', question.part_ar)
+                                    data.append(
+                                        'question_nl',
+                                        question.question_nl
+                                    )
+                                    data.append(
+                                        'options_nl',
+                                        JSON.stringify(question.options_nl)
+                                    )
+                                    data.append('answer_nl', question.answer_nl)
+                                    data.append('part_nl', question.part_nl)
+                                    data.append('reason', question.reason)
+                                    data.append('reason_ar', question.reason_ar)
+                                    data.append('reason_nl', question.reason_nl)
+                                    data.append(
+                                        'draggable',
+                                        subscriber.draggable
+                                    )
+                                    data.append('questionImage', question.image)
 
-                                    const data = {
-                                        question: question.question,
-                                        options: JSON.stringify(
-                                            question.options
-                                        ),
-                                        answer: question.answer,
-                                        part: question.part,
-                                        question_ar: question.question_ar,
-                                        options_ar: JSON.stringify(
-                                            question.options_ar
-                                        ),
-                                        answer_ar: question.answer_ar,
-                                        part_ar: question.part_ar,
-                                        question_nl: question.question_nl,
-                                        options_nl: JSON.stringify(
-                                            question.options_nl
-                                        ),
-                                        answer_nl: question.answer_nl,
-                                        part_nl: question.part_nl,
-                                    }
+                                    // const data = {
+                                    //     question: question.question,
+                                    //     options: JSON.stringify(
+                                    //         question.options
+                                    //     ),
+                                    //     answer: question.answer,
+                                    //     part: question.part,
+                                    //     question_ar: question.question_ar,
+                                    //     options_ar: JSON.stringify(
+                                    //         question.options_ar
+                                    //     ),
+                                    //     answer_ar: question.answer_ar,
+                                    //     part_ar: question.part_ar,
+                                    //     question_nl: question.question_nl,
+                                    //     options_nl: JSON.stringify(
+                                    //         question.options_nl
+                                    //     ),
+                                    //     answer_nl: question.answer_nl,
+                                    //     part_nl: question.part_nl,
+                                    // }
 
                                     if (lang === 'en') {
                                         updateData(data, subscriber.id, setOpen)
@@ -684,12 +738,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                     alt="question"
                 />
             </TableCell>
-            <TableCell
-                key={subscriber.id}
-                colSpan={2}
-                className="px-0 "
-                align="left"
-            >
+            <TableCell key={subscriber.id} className="px-0 " align="left">
                 {value.question}
             </TableCell>
             <TableCell key={subscriber.id} className="px-0 " align="left">
@@ -703,6 +752,9 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
             </TableCell>
             <TableCell key={subscriber.id} className="px-0 " align="left">
                 {value.answer}
+            </TableCell>
+            <TableCell key={subscriber.id} className="px-0 " align="left">
+                {value.reason}
             </TableCell>
             <TableCell className="px-0">
                 <IconButton onClick={() => removeUser(subscriber.id)}>

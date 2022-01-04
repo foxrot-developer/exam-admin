@@ -58,14 +58,9 @@ const useStyles = makeStyles(({ palette, ...theme }) => ({
 
 const FreeExam = () => {
     const dispatch = useDispatch()
-    const navigation = useHistory()
     const classes = useStyles()
     const [open, setOpen] = useState(false)
-    const [questionList, setQuestionList] = useState({
-        part1: [],
-        part2: [],
-        part3: [],
-    })
+
     const [language, setLanguage] = useState({
         isEnglish: true,
         isArabic: false,
@@ -74,30 +69,38 @@ const FreeExam = () => {
     const [dragAbleOpen, setDragAbleOpen] = useState(false)
 
     const questions = useSelector((state) => state.exam.questions)
-    console.log(questions)
     useEffect(() => {
         dispatch(getFreeExam('en'))
     }, [])
 
-    const [question, setQuestion] = useState({
-        question: '',
-        options: ['', '', ''],
-        answer: '',
-        part: '',
-        question_ar: '',
-        options_ar: ['', '', ''],
-        answer_ar: '',
-        part_ar: '',
-        question_nl: '',
-        options_nl: ['', '', ''],
-        answer_nl: '',
-        part_nl: '',
-        reason: '',
-        reason_ar: '',
-        reason_nl: '',
-        image: null,
-        draggable: false,
-    })
+    const [question, setQuestion] = useState([])
+
+    useEffect(() => {
+        if (
+            questions !== undefined &&
+            questions.length > 0 &&
+            questions[0].part1 !== undefined &&
+            questions[0].part2 !== undefined &&
+            questions[0].part3 !== undefined
+        ) {
+            console.log(
+                [
+                    ...JSON.parse(questions[0].part1),
+                    ...JSON.parse(questions[0].part2),
+                    ...JSON.parse(questions[0].part3),
+                ],
+                JSON.parse(questions[0].part1).length,
+                JSON.parse(questions[0].part2).length,
+                JSON.parse(questions[0].part3).length
+            )
+
+            setQuestion([
+                ...JSON.parse(questions[0].part1),
+                ...JSON.parse(questions[0].part2),
+                ...JSON.parse(questions[0].part3),
+            ])
+        }
+    }, [questions])
     const [dragAndDropQuestion, setDragAndDropQuestion] = useState({
         question: '',
         options: ['', '', '', '', ''],
@@ -118,55 +121,6 @@ const FreeExam = () => {
         image: null,
         draggable: true,
     })
-
-    const englishPart = ['part 1', 'part 2', 'part 3']
-    const arabicPart = ['الجزء 1', 'الجزء 2', 'الجزء 3']
-    const netherlandsPart = ['Deel 1', 'Deel 2', 'Deel 3']
-    const dragDropenglishPart = ['part 2', 'part 3']
-    const dragDroparabicPart = ['الجزء 2', 'الجزء 3']
-    const dragDropnetherlandsPart = ['Deel 2', 'Deel 3']
-
-    useEffect(() => {
-        if (questions !== undefined && questions.length > 0) {
-            if (lang === '' || lang === 'en') {
-                setQuestionList({
-                    part1: questions.filter(
-                        (question) => question.part === 'part 1'
-                    ),
-                    part2: questions.filter(
-                        (question) => question.part === 'part 2'
-                    ),
-                    part3: questions.filter(
-                        (question) => question.part === 'part 3'
-                    ),
-                })
-            } else if (lang === 'ar') {
-                setQuestionList({
-                    part1: questions.filter(
-                        (question) => question.part === 'الجزء 1'
-                    ),
-                    part2: questions.filter(
-                        (question) => question.part === 'الجزء 2'
-                    ),
-                    part3: questions.filter(
-                        (question) => question.part === 'الجزء 3'
-                    ),
-                })
-            } else if (lang === 'nl') {
-                setQuestionList({
-                    part1: questions.filter(
-                        (question) => question.part === 'Deel 1'
-                    ),
-                    part2: questions.filter(
-                        (question) => question.part === 'Deel 2'
-                    ),
-                    part3: questions.filter(
-                        (question) => question.part === 'Deel 3'
-                    ),
-                })
-            }
-        }
-    }, [questions])
 
     const [lang, setLang] = useState('en')
 
@@ -309,7 +263,7 @@ const FreeExam = () => {
 
     return (
         <Box component="div" className={classes.root}>
-            <CustomModal open={open} setOpen={setOpen}>
+            {/* <CustomModal open={open} setOpen={setOpen}>
                 <FormControl encType="multipart/form-data">
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -789,9 +743,9 @@ const FreeExam = () => {
                         </Box>
                     </Grid>
                 </FormControl>
-            </CustomModal>
+            </CustomModal> */}
 
-            <CustomModal
+            {/* <CustomModal
                 open={dragAbleOpen}
                 setOpen={() => setDragAbleOpen(false)}
             >
@@ -1301,7 +1255,7 @@ const FreeExam = () => {
                         </Box>
                     </Grid>
                 </FormControl>
-            </CustomModal>
+            </CustomModal> */}
             <Box component="div" mb={4} className={classes.btnRoot}>
                 <IconButton
                     onClick={() => {
@@ -1333,7 +1287,7 @@ const FreeExam = () => {
                         <MenuItem value={'nl'}>Netherland</MenuItem>
                     </Select>
                 </FormControl>
-                <Box component="div">
+                {/* <Box component="div">
                     <CustomButton
                         eventHandler={() => {
                             setOpen(true)
@@ -1352,16 +1306,10 @@ const FreeExam = () => {
                         }}
                         title="Import Questions"
                     />
-                </Box>
+                    </Box>*/}
             </Box>
-            <SimpleCard title="Part 1">
-                <PaginationTable data={questionList.part1} lang={lang} />
-            </SimpleCard>
-            <SimpleCard title="Part 2">
-                <PaginationTable data={questionList.part2} lang={lang} />
-            </SimpleCard>
-            <SimpleCard title="Part 3">
-                <PaginationTable data={questionList.part3} lang={lang} />
+            <SimpleCard title="QuestionS">
+                <PaginationTable data={question} lang={lang} />
             </SimpleCard>
         </Box>
     )
