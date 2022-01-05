@@ -95,14 +95,6 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
             <TableCell className="px-0 " align="left">
                 {value.reason}
             </TableCell>
-            {/* <TableCell className="px-0">
-                <IconButton onClick={() => removeUser(subscriber.id)}>
-                    <Icon>delete</Icon>
-                </IconButton>
-                <IconButton onClick={() => setOpen(true)}>
-                    <Icon>edit</Icon>
-                </IconButton>
-            </TableCell> */}
         </>
     )
 }

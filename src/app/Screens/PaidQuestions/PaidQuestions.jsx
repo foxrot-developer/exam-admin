@@ -237,9 +237,9 @@ const PaidQuestion = () => {
                 )
                 data.append('part_nl', dragAndDropQuestion.part_nl)
                 data.append('questionImage', dragAndDropQuestion.image)
-                data.append('reason', question.reason)
-                data.append('reason_ar', question.reason_ar)
-                data.append('reason_nl', question.reason_nl)
+                data.append('reason', dragAndDropQuestion.reason)
+                data.append('reason_ar', dragAndDropQuestion.reason_ar)
+                data.append('reason_nl', dragAndDropQuestion.reason_nl)
                 data.append('draggable', true)
 
                 dispatch(
@@ -1262,6 +1262,40 @@ const PaidQuestion = () => {
                                             e.target.value,
                                         ],
                                     })
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                margin="dense"
+                                fullWidth
+                                label="Reason"
+                                variant="outlined"
+                                required
+                                value={
+                                    language.isEnglish
+                                        ? dragAndDropQuestion.reason
+                                        : language.isArabic
+                                        ? dragAndDropQuestion.reason_ar
+                                        : dragAndDropQuestion.reason_nl
+                                }
+                                onChange={(e) => {
+                                    if (language.isEnglish) {
+                                        setDragAndDropQuestion({
+                                            ...dragAndDropQuestion,
+                                            reason: e.target.value,
+                                        })
+                                    } else if (language.isArabic) {
+                                        setDragAndDropQuestion({
+                                            ...dragAndDropQuestion,
+                                            reason_ar: e.target.value,
+                                        })
+                                    } else if (language.isNetherlands) {
+                                        setDragAndDropQuestion({
+                                            ...dragAndDropQuestion,
+                                            reason_nl: e.target.value,
+                                        })
+                                    }
                                 }}
                             />
                         </Grid>
