@@ -58,7 +58,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData }) => {
                 <img
                     style={{ width: '70px', height: 'auto', aspectRatio: 1 }}
                     src={
-                        'https://examin-education.herokuapp.com/' +
+                        'https://admin-alshahbarijschool.nl/' +
                         subscriber.questionImage
                     }
                     alt="question"

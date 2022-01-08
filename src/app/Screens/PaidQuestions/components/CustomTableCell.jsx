@@ -121,7 +121,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                     reason_ar: '',
                     reason_nl: '',
                     image:
-                        'https://examin-education.herokuapp.com/' +
+                        'https://admin-alshahbarijschool.nl/' +
                         subscriber.questionImage,
                 })
             } else if (lang === 'ar') {
@@ -149,7 +149,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                     reason_ar: subscriber.reason,
                     reason_nl: '',
                     image:
-                        'https://examin-education.herokuapp.com/' +
+                        'https://admin-alshahbarijschool.nl/' +
                         subscriber.questionImage,
                 })
             } else if (lang === 'nl') {
@@ -177,7 +177,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                     reason_ar: '',
                     reason_nl: subscriber.reason,
                     image:
-                        'https://examin-education.herokuapp.com/' +
+                        'https://admin-alshahbarijschool.nl/' +
                         subscriber.questionImage,
                 })
             }
@@ -908,7 +908,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                             ? `url(${URL.createObjectURL(
                                                   dragAndDropQuestion.image
                                               )})`
-                                            : `url(https://examin-education.herokuapp.com/${subscriber.questionImage})`,
+                                            : `url(https://admin-alshahbarijschool.nl/${subscriber.questionImage})`,
                                     backgroundRepeat: 'no-repeat',
                                     backgroundPosition: 'center',
                                     backgroundColor: '#ccc',
@@ -1522,7 +1522,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                 <img
                     style={{ width: '70px', height: 'auto', aspectRatio: 1 }}
                     src={
-                        'https://examin-education.herokuapp.com/' +
+                        'https://admin-alshahbarijschool.nl/' +
                         subscriber.questionImage
                     }
                     alt="question"

@@ -2,7 +2,7 @@ import axios from 'axios'
 import Toast from 'Toast'
 
 const axiosInstance = axios.create({
-    baseURL: 'https://examin-education.herokuapp.com/api/',
+    baseURL: 'https://admin-alshahbarijschool.nl/api/',
 })
 
 axiosInstance.interceptors.request.use((request) => {
