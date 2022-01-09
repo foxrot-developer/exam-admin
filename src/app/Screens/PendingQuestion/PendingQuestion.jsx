@@ -386,29 +386,42 @@ const PendingQuestion = () => {
                                                         .option3,
                                                 ]),
                                                 answer: '',
-                                                reason: csvData.english.part1[
-                                                    i
-                                                ].reason
-                                                    .replace(
-                                                        /(\r\n|\n|\r)/gm,
-                                                        ''
-                                                    )
-                                                    .trim(),
+                                                reason:
+                                                    csvData.english.part1[i]
+                                                        .reason !== null
+                                                        ? csvData.english.part1[
+                                                              i
+                                                          ].reason
+                                                              .replace(
+                                                                  /(\r\n|\n|\r)/gm,
+                                                                  ''
+                                                              )
+                                                              .trim()
+                                                        : '',
                                                 reason_nl:
-                                                    csvData.netherlands.part1[
-                                                        i
-                                                    ].reason_nl.replace(
-                                                        /(\r\n|\n|\r)/gm,
-                                                        ''
-                                                    ),
-                                                reason_ar: csvData.arabic.part1[
-                                                    i
-                                                ].reason_ar
-                                                    .replace(
-                                                        /(\r\n|\n|\r)/gm,
-                                                        ''
-                                                    )
-                                                    .trim(),
+                                                    csvData.netherlands.part1[i]
+                                                        .reason_nl !== null
+                                                        ? csvData.netherlands.part1[
+                                                              i
+                                                          ].reason_nl
+                                                              .replace(
+                                                                  /\r\n|\n|\r/gm,
+                                                                  ''
+                                                              )
+                                                              .trim()
+                                                        : '',
+                                                reason_ar:
+                                                    csvData.arabic.part1[i]
+                                                        .reason_ar !== null
+                                                        ? csvData.arabic.part1[
+                                                              i
+                                                          ].reason_ar
+                                                              .replace(
+                                                                  /\r\n|\n|\r/gm,
+                                                                  ''
+                                                              )
+                                                              .trim()
+                                                        : '',
                                                 part: englishPart[0],
                                                 question_ar:
                                                     csvData.arabic.part1[i]
@@ -467,20 +480,31 @@ const PendingQuestion = () => {
                                                     : '',
                                             ]),
                                             answer: '',
-                                            reason: csvData.english.part2[
-                                                i
-                                            ].reason
-                                                .replace(/(\r\n|\n|\r)/gm, '')
-                                                .trim(),
+                                            reason:
+                                                csvData.english.part2[i]
+                                                    .reason !== null
+                                                    ? csvData.english.part2[
+                                                          i
+                                                      ].reason
+                                                          .replace(
+                                                              /\r\n|\n|\r/gm,
+                                                              ''
+                                                          )
+                                                          .trim()
+                                                    : '',
                                             reason_nl:
-                                                csvData.netherlands.part2[
-                                                    i
-                                                ].reason_nl
-                                                    .replace(
-                                                        /(\r\n|\n|\r)/gm,
-                                                        ''
-                                                    )
-                                                    .trim(),
+                                                csvData.netherlands.part2[i]
+                                                    .reason_nl !== null
+                                                    ? csvData.netherlands.part2[
+                                                          i
+                                                      ].reason_nl
+                                                          .replace(
+                                                              /\r\n|\n|\r/gm,
+                                                              ''
+                                                          )
+                                                          .trim()
+                                                    : '',
+
                                             reason_ar: csvData.arabic.part2[i]
                                                 .reason_ar
                                                 ? csvData.arabic.part2[
@@ -586,20 +610,30 @@ const PendingQuestion = () => {
                                             ]),
                                             answer: '',
                                             part: englishPart[2],
-                                            reason: csvData.english.part3[
-                                                i
-                                            ].reason
-                                                .replace(/(\r\n|\n|\r)/gm, '')
-                                                .trim(),
+                                            reason:
+                                                csvData.english.part3[i]
+                                                    .reason !== null
+                                                    ? csvData.english.part3[
+                                                          i
+                                                      ].reason
+                                                          .replace(
+                                                              /\r\n|\n|\r/gm,
+                                                              ''
+                                                          )
+                                                          .trim()
+                                                    : '',
                                             reason_nl:
-                                                csvData.netherlands.part3[
-                                                    i
-                                                ].reason_nl
-                                                    .replace(
-                                                        /(\r\n|\n|\r)/gm,
-                                                        ''
-                                                    )
-                                                    .trim(),
+                                                csvData.netherlands.part3[i]
+                                                    .reason_nl !== null
+                                                    ? csvData.netherlands.part3[
+                                                          i
+                                                      ].reason_nl
+                                                          .replace(
+                                                              /\r\n|\n|\r/gm,
+                                                              ''
+                                                          )
+                                                          .trim()
+                                                    : '',
                                             reason_ar: csvData.arabic.part3[i]
                                                 .reason_ar
                                                 ? csvData.arabic.part3[
