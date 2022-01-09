@@ -89,6 +89,7 @@ const CustomTableCell = ({
         answer_ar: '',
         answer_nl: '',
         image: '',
+        draggable: subscriber.draggable,
     })
 
     const [circles, setCircles] = useState([])
@@ -271,19 +272,31 @@ const CustomTableCell = ({
                 <li>{subscriber.part_nl}</li>
             </TableCell>
             <TableCell className="px-0 " align="left">
-                {JSON.parse(subscriber.options)[0] === 1 ||
-                JSON.parse(subscriber.options)[0] === 2 ||
-                JSON.parse(subscriber.options)[0] === 3 ||
-                JSON.parse(subscriber.options)[1] === 1 ||
-                JSON.parse(subscriber.options)[1] === 2 ||
-                JSON.parse(subscriber.options)[1] === 3 ||
-                JSON.parse(subscriber.options)[2] === 1 ||
-                JSON.parse(subscriber.options)[2] === 2 ||
-                JSON.parse(subscriber.options)[2] === 3 ||
-                JSON.parse(subscriber.options)[1] === '' ||
-                JSON.parse(subscriber.options)[1] === null
-                    ? 'Draggable'
-                    : 'Not Draggable'}
+                {isEditMode ? (
+                    <FormControl fullWidth>
+                        <InputLabel id="Is_Draggable">Is Draggable</InputLabel>
+                        <Select
+                            labelId="Is_Draggable"
+                            id="Is_Draggable"
+                            label="Is Draggable"
+                            value={question.draggable}
+                            required
+                            onChange={(e) => {
+                                setQuestion({
+                                    ...question,
+                                    draggable: e.target.value,
+                                })
+                            }}
+                        >
+                            <MenuItem value={true}>Yes</MenuItem>
+                            <MenuItem value={false}>No</MenuItem>
+                        </Select>
+                    </FormControl>
+                ) : question.draggable ? (
+                    'Draggable'
+                ) : (
+                    'Not Draggable'
+                )}
             </TableCell>
             <TableCell className="px-0 " align="left">
                 <div>
@@ -536,7 +549,7 @@ const CustomTableCell = ({
                         required={true}
                         variant="outlined"
                         value={question.optionC_nl}
-                        name="Dutch"
+                        name="Draggable"
                         onChange={(e) => {
                             setQuestion({
                                 ...question,
@@ -550,17 +563,7 @@ const CustomTableCell = ({
                 )}
             </TableCell>
             <TableCell className="px-0 " align="left">
-                {JSON.parse(subscriber.options)[0] === 1 ||
-                JSON.parse(subscriber.options)[0] === 2 ||
-                JSON.parse(subscriber.options)[0] === 3 ||
-                JSON.parse(subscriber.options)[1] === 1 ||
-                JSON.parse(subscriber.options)[1] === 2 ||
-                JSON.parse(subscriber.options)[1] === 3 ||
-                JSON.parse(subscriber.options)[2] === 1 ||
-                JSON.parse(subscriber.options)[2] === 2 ||
-                JSON.parse(subscriber.options)[2] === 3 ||
-                JSON.parse(subscriber.options)[1] === '' ||
-                JSON.parse(subscriber.options)[1] === null ? (
+                {question.draggable ? (
                     <img
                         src={
                             question.image !== ''
@@ -773,7 +776,7 @@ const CustomTableCell = ({
                             data.append('reason', question.reason)
                             data.append('reason_ar', question.reason_ar)
                             data.append('reason_nl', question.reason_nl)
-                            data.append('draggable', subscriber.draggable)
+                            data.append('draggable', question.draggable)
                         } else {
                             data.append('question', question.question)
                             data.append(
@@ -821,7 +824,7 @@ const CustomTableCell = ({
                             data.append('reason', question.reason)
                             data.append('reason_ar', question.reason_ar)
                             data.append('reason_nl', question.reason_nl)
-                            data.append('draggable', subscriber.draggable)
+                            data.append('draggable', question.draggable)
                         }
                         if (type !== 'paid-question') {
                             dispatch(createImproveFreeExam(data))
@@ -872,7 +875,7 @@ const CustomTableCell = ({
                                 tempData.part1[index].reason_nl =
                                     question.reason_nl
                                 tempData.part1[index].draggable =
-                                    subscriber.draggable
+                                    question.draggable
                             } else if (subscriber.part === 'part 2') {
                                 tempData.part2[index].question =
                                     question.question
@@ -909,7 +912,7 @@ const CustomTableCell = ({
                                 tempData.part2[index].reason_nl =
                                     question.reason_nl
                                 tempData.part2[index].draggable =
-                                    subscriber.draggable
+                                    question.draggable
                             } else if (subscriber.part === 'part 3') {
                                 tempData.part3[index].question =
                                     question.question
@@ -946,8 +949,9 @@ const CustomTableCell = ({
                                 tempData.part3[index].reason_nl =
                                     question.reason_nl
                                 tempData.part3[index].draggable =
-                                    subscriber.draggable
+                                    question.draggable
                             }
+                            setData(tempData)
                             setEditMode(false)
                         }}
                     >
