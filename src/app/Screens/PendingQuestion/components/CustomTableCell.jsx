@@ -951,7 +951,7 @@ const CustomTableCell = ({
                             setEditMode(false)
                         }}
                     >
-                        <Icon>save</Icon>2
+                        <Icon>save</Icon>
                     </IconButton>
                 ) : (
                     <IconButton onClick={() => setEditMode(true)}>
