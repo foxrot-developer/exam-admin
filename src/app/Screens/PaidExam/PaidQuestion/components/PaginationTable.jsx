@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 import CustomTableCell from './CustomTableCell'
 
 const PaginationTable = ({ data }) => {
-    const [rowsPerPage, setRowsPerPage] = React.useState(8)
+    const [rowsPerPage, setRowsPerPage] = React.useState(30)
     const [page, setPage] = React.useState(0)
     const dispatch = useDispatch()
 
@@ -34,6 +34,7 @@ const PaginationTable = ({ data }) => {
                 <TableHead>
                     <TableRow>
                         <TableCell>Part</TableCell>
+                        <TableCell>Draggable</TableCell>
                         <TableCell>Image</TableCell>
                         <TableCell colSpan={2}>Question</TableCell>
                         <TableCell>Option A </TableCell>
@@ -50,7 +51,7 @@ const PaginationTable = ({ data }) => {
                                 page * rowsPerPage + rowsPerPage
                             )
                             .map((subscriber, index) => (
-                                <TableRow key={subscriber.id}>
+                                <TableRow key={subscriber._id}>
                                     <CustomTableCell
                                         subscriber={subscriber}
                                         removeUser={removeQuestion}

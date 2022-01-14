@@ -152,7 +152,7 @@ export const getPaidExam = (lang) => (dispatch) => {
         .then((res) => {
             dispatch({
                 type: GET_PAID_EXAM,
-                payload: res.data.paid_exams,
+                payload: res.data,
             })
         })
         .catch((err) =>

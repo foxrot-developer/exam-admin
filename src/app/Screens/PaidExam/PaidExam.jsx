@@ -77,6 +77,11 @@ const PaidExam = () => {
         part2: [],
         part3: [],
     })
+    useEffect(() => {
+        if (exams) {
+            setExamPaid(exams.en_paid_exams)
+        }
+    }, [exams])
 
     useEffect(() => {
         if (questions) {
@@ -160,6 +165,8 @@ const PaidExam = () => {
     })
 
     const [lang, setLang] = useState('en')
+
+    const [examPaid, setExamPaid] = useState([])
 
     return (
         <Box component="div" className={classes.root}>
@@ -360,7 +367,15 @@ const PaidExam = () => {
                         value={lang}
                         onChange={(e) => {
                             setLang(e.target.value)
-                            dispatch(getPaidExam(e.target.value))
+                            if (e.target.value === 'en') {
+                                setExamPaid(exams.en_paid_exams)
+                            }
+                            if (e.target.value === 'ar') {
+                                setExamPaid(exams.ar_paid_exams)
+                            }
+                            if (e.target.value === 'nl') {
+                                setExamPaid(exams.nl_paid_exams)
+                            }
                         }}
                         required
                     >
@@ -377,7 +392,7 @@ const PaidExam = () => {
                 />
             </Box>
             <SimpleCard title="List">
-                <PaginationTable data={exams} lang={lang} />
+                <PaginationTable data={examPaid} lang={lang} />
             </SimpleCard>
         </Box>
     )

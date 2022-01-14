@@ -55,6 +55,9 @@ const CustomTableCell = ({ subscriber, removeUser, updateData }) => {
                 )}
             </TableCell>
             <TableCell className="px-0 " align="left">
+                {subscriber.draggable ? 'Yes' : 'No'}
+            </TableCell>
+            <TableCell className="px-0 " align="left">
                 <img
                     style={{ width: '70px', height: 'auto', aspectRatio: 1 }}
                     src={

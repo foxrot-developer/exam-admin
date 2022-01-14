@@ -9,12 +9,17 @@ export const GET_WEB_PROFILE_NL = 'GET_WEB_PROFILE_NL'
 export const GET_EMAIL_TEMPLATE = 'GET_EMAIL_TEMPLATE'
 
 export const getUserList = () => (dispatch) => {
-    axiosInstance.get('admin/all-users').then((res) => {
-        dispatch({
-            type: GET_USER_LIST,
-            payload: res.data.users,
+    axiosInstance
+        .get('admin/all-users')
+        .then((res) => {
+            dispatch({
+                type: GET_USER_LIST,
+                payload: res.data.users,
+            })
         })
-    })
+        .catch((err) => {
+            Toast.error(err)
+        })
 }
 
 export const deleteUser = (id) => (dispatch) => {
