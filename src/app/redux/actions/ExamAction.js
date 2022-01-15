@@ -264,13 +264,17 @@ export const getPaidQuestion = (lang) => (dispatch) => {
 export const updatePaidQuestion =
     (exam, id, setEditMode, lang) => (dispatch) => {
         axiosInstance
-            .patch(`paid-exam/edit-paid-exam-question/${id}`, exam)
-            .then(() => {
+            .patch(`paid-exam/edit-paid-exam-question/${id}`, exam, {
+                headers: {
+                    lang: lang,
+                },
+            })
+            .then((res) => {
                 setEditMode(false)
-                Toast.success('Question updated successfully')
+                Toast.success(res.data.message)
                 dispatch(getPaidQuestion(lang))
             })
-            .catch((err) => console.log(err))
+            .catch((err) => console.log(err.response.data.message))
     }
 
 export const deletePaidQuestion = (id, lang) => (dispatch) => {

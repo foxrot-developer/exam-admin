@@ -302,45 +302,43 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
     }
 
     const addCircle = (event) => {
-        if (circles.length < JSON.parse(subscriber.options).length) {
-            let [x, y] = getClickCoords(event)
-            let newCircle = (
-                <g id="UrTavla">
-                    <circle
-                        key={circles.length + 1}
-                        cx={x}
-                        cy={y}
-                        r="20"
-                        stroke="black"
-                        strokeWidth="1"
-                        fill="white"
-                    ></circle>
-                    <text
-                        x={x}
-                        y={y}
-                        text-anchor="middle"
-                        stroke="#51c5cf"
-                        stroke-width="2px"
-                        dy=".3em"
-                    >
-                        {circles.length + 1}
-                    </text>
-                </g>
-            )
-            let allCircles = [...circles, newCircle]
-            setCircles(allCircles)
-            setDragAndDropQuestion({
-                ...dragAndDropQuestion,
-                circles: [
-                    ...dragAndDropQuestion.circles,
-                    {
-                        x: x,
-                        y: y,
-                        id: circles.length + 1,
-                    },
-                ],
-            })
-        }
+        let [x, y] = getClickCoords(event)
+        let newCircle = (
+            <g id="UrTavla">
+                <circle
+                    key={circles.length + 1}
+                    cx={x}
+                    cy={y}
+                    r="20"
+                    stroke="black"
+                    strokeWidth="1"
+                    fill="white"
+                ></circle>
+                <text
+                    x={x}
+                    y={y}
+                    text-anchor="middle"
+                    stroke="#51c5cf"
+                    stroke-width="2px"
+                    dy=".3em"
+                >
+                    {circles.length + 1}
+                </text>
+            </g>
+        )
+        let allCircles = [...circles, newCircle]
+        setCircles(allCircles)
+        setDragAndDropQuestion({
+            ...dragAndDropQuestion,
+            circles: [
+                ...dragAndDropQuestion.circles,
+                {
+                    x: x,
+                    y: y,
+                    id: circles.length + 1,
+                },
+            ],
+        })
     }
 
     return (
@@ -375,6 +373,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                 className={classes.languageBtnContainer}
                             >
                                 <Button
+                                    disabled={lang === 'en' ? false : true}
                                     variant="contained"
                                     style={{
                                         width: '30%',
@@ -399,7 +398,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                     English
                                 </Button>
                                 <Button
-                                    dis
+                                    disabled={lang === 'ar' ? false : true}
                                     variant="contained"
                                     style={{
                                         width: '30%',
@@ -424,6 +423,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                     Arabic
                                 </Button>
                                 <Button
+                                    disabled={lang === 'nl' ? false : true}
                                     variant="contained"
                                     style={{
                                         width: '30%',
@@ -794,43 +794,6 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                         <Box component="div" className={classes.modalContent}>
                             <Button
                                 onClick={() => {
-                                    const data = new FormData()
-                                    data.append('question', question.question)
-                                    data.append(
-                                        'options',
-                                        JSON.stringify(question.options)
-                                    )
-                                    data.append('answer', question.answer)
-                                    data.append('part', question.part)
-                                    data.append(
-                                        'question_ar',
-                                        question.question_ar
-                                    )
-                                    data.append(
-                                        'options_ar',
-                                        JSON.stringify(question.options_ar)
-                                    )
-                                    data.append('answer_ar', question.answer_ar)
-                                    data.append('part_ar', question.part_ar)
-                                    data.append(
-                                        'question_nl',
-                                        question.question_nl
-                                    )
-                                    data.append(
-                                        'options_nl',
-                                        JSON.stringify(question.options_nl)
-                                    )
-                                    data.append('answer_nl', question.answer_nl)
-                                    data.append('part_nl', question.part_nl)
-                                    data.append('reason', question.reason)
-                                    data.append('reason_ar', question.reason_ar)
-                                    data.append('reason_nl', question.reason_nl)
-                                    data.append(
-                                        'draggable',
-                                        subscriber.draggable
-                                    )
-                                    data.append('questionImage', question.image)
-
                                     // const data = {
                                     //     question: question.question,
                                     //     options: JSON.stringify(
@@ -853,14 +816,90 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                     // }
 
                                     if (lang === 'en') {
+                                        const data = new FormData()
+                                        data.append(
+                                            'question',
+                                            question.question
+                                        )
+                                        data.append(
+                                            'options',
+                                            JSON.stringify(question.options)
+                                        )
+                                        data.append('answer', question.answer)
+                                        data.append('part', question.part)
+                                        data.append('reason', question.reason)
+                                        data.append(
+                                            'draggable',
+                                            subscriber.draggable
+                                        )
+                                        data.append(
+                                            'questionImage',
+                                            question.image
+                                        )
+
                                         updateData(data, subscriber.id, setOpen)
                                     } else if (lang === 'ar') {
+                                        const data = new FormData()
+                                        data.append(
+                                            'question_ar',
+                                            question.question_ar
+                                        )
+                                        data.append(
+                                            'options_ar',
+                                            JSON.stringify(question.options_ar)
+                                        )
+                                        data.append(
+                                            'answer_ar',
+                                            question.answer_ar
+                                        )
+                                        data.append('part_ar', question.part_ar)
+                                        data.append(
+                                            'reason_ar',
+                                            question.reason_ar
+                                        )
+                                        data.append(
+                                            'draggable',
+                                            subscriber.draggable
+                                        )
+                                        data.append(
+                                            'questionImage',
+                                            question.image
+                                        )
+
                                         updateData(
                                             data,
                                             subscriber.enId,
                                             setOpen
                                         )
                                     } else if (lang === 'nl') {
+                                        const data = new FormData()
+
+                                        data.append(
+                                            'question_nl',
+                                            question.question_nl
+                                        )
+                                        data.append(
+                                            'options_nl',
+                                            JSON.stringify(question.options_nl)
+                                        )
+                                        data.append(
+                                            'answer_nl',
+                                            question.answer_nl
+                                        )
+                                        data.append('part_nl', question.part_nl)
+                                        data.append(
+                                            'reason_nl',
+                                            question.reason_nl
+                                        )
+                                        data.append(
+                                            'draggable',
+                                            subscriber.draggable
+                                        )
+                                        data.append(
+                                            'questionImage',
+                                            question.image
+                                        )
+
                                         updateData(
                                             data,
                                             subscriber.enId,
@@ -878,7 +917,6 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                     paddingLeft: '30px',
                                     paddingRight: '30px',
                                 }}
-                                disabled={language.isNetherlands ? false : true}
                             >
                                 Update
                             </Button>
@@ -954,6 +992,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                             >
                                 <Button
                                     variant="contained"
+                                    disabled={lang === 'en' ? false : true}
                                     style={{
                                         width: '30%',
                                         backgroundColor: language.isEnglish
@@ -977,7 +1016,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                     English
                                 </Button>
                                 <Button
-                                    dis
+                                    disabled={lang === 'ar' ? false : true}
                                     variant="contained"
                                     style={{
                                         width: '30%',
@@ -1002,6 +1041,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                     Arabic
                                 </Button>
                                 <Button
+                                    disabled={lang === 'nl' ? false : true}
                                     variant="contained"
                                     style={{
                                         width: '30%',
@@ -1400,97 +1440,109 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                         <Box component="div" className={classes.modalContent}>
                             <Button
                                 onClick={() => {
-                                    const data = new FormData()
-                                    data.append(
-                                        'question',
-                                        dragAndDropQuestion.question
-                                    )
-                                    data.append(
-                                        'options',
-                                        JSON.stringify(
-                                            dragAndDropQuestion.options
-                                        )
-                                    )
-                                    data.append(
-                                        'answer',
-                                        JSON.stringify(
-                                            dragAndDropQuestion.circles
-                                        )
-                                    )
-                                    data.append(
-                                        'part',
-                                        dragAndDropQuestion.part
-                                    )
-                                    data.append(
-                                        'question_ar',
-                                        dragAndDropQuestion.question_ar
-                                    )
-                                    data.append(
-                                        'options_ar',
-                                        JSON.stringify(
-                                            dragAndDropQuestion.options_ar
-                                        )
-                                    )
-                                    data.append(
-                                        'answer_ar',
-                                        JSON.stringify(
-                                            dragAndDropQuestion.circles
-                                        )
-                                    )
-                                    data.append(
-                                        'part_ar',
-                                        dragAndDropQuestion.part_ar
-                                    )
-                                    data.append(
-                                        'question_nl',
-                                        dragAndDropQuestion.question_nl
-                                    )
-                                    data.append(
-                                        'options_nl',
-                                        JSON.stringify(
-                                            dragAndDropQuestion.options_nl
-                                        )
-                                    )
-                                    data.append(
-                                        'answer_nl',
-                                        JSON.stringify(
-                                            dragAndDropQuestion.circles
-                                        )
-                                    )
-                                    data.append(
-                                        'part_nl',
-                                        dragAndDropQuestion.part_nl
-                                    )
-                                    data.append(
-                                        'questionImage',
-                                        dragAndDropQuestion.image
-                                    )
-                                    data.append(
-                                        'reason',
-                                        dragAndDropQuestion.reason
-                                    )
-                                    data.append(
-                                        'reason_ar',
-                                        dragAndDropQuestion.reason_ar
-                                    )
-                                    data.append(
-                                        'reason_nl',
-                                        dragAndDropQuestion.reason_nl
-                                    )
-                                    data.append('draggable', true)
                                     if (lang === 'en') {
+                                        const data = new FormData()
+                                        data.append(
+                                            'question',
+                                            dragAndDropQuestion.question
+                                        )
+                                        data.append(
+                                            'options',
+                                            JSON.stringify(
+                                                dragAndDropQuestion.options
+                                            )
+                                        )
+                                        data.append(
+                                            'answer',
+                                            JSON.stringify(
+                                                dragAndDropQuestion.circles
+                                            )
+                                        )
+                                        data.append(
+                                            'part',
+                                            dragAndDropQuestion.part
+                                        )
+                                        data.append(
+                                            'questionImage',
+                                            dragAndDropQuestion.image
+                                        )
+                                        data.append(
+                                            'reason',
+                                            dragAndDropQuestion.reason
+                                        )
+                                        data.append('draggable', true)
                                         updateData(
                                             data,
                                             subscriber.id,
                                             setDragAbleOpen
                                         )
                                     } else if (lang === 'ar') {
+                                        const data = new FormData()
+                                        data.append(
+                                            'question_ar',
+                                            dragAndDropQuestion.question_ar
+                                        )
+                                        data.append(
+                                            'options_ar',
+                                            JSON.stringify(
+                                                dragAndDropQuestion.options_ar
+                                            )
+                                        )
+                                        data.append(
+                                            'answer_ar',
+                                            JSON.stringify(
+                                                dragAndDropQuestion.circles
+                                            )
+                                        )
+                                        data.append(
+                                            'part_ar',
+                                            dragAndDropQuestion.part_ar
+                                        )
+                                        data.append(
+                                            'questionImage',
+                                            dragAndDropQuestion.image
+                                        )
+                                        data.append(
+                                            'reason_ar',
+                                            dragAndDropQuestion.reason_ar
+                                        )
+                                        data.append('draggable', true)
                                         updateData(
                                             data,
                                             subscriber.enId,
                                             setDragAbleOpen
                                         )
                                     } else if (lang === 'nl') {
+                                        const data = new FormData()
+                                        data.append(
+                                            'question_nl',
+                                            dragAndDropQuestion.question_nl
+                                        )
+                                        data.append(
+                                            'options_nl',
+                                            JSON.stringify(
+                                                dragAndDropQuestion.options_nl
+                                            )
+                                        )
+                                        data.append(
+                                            'answer_nl',
+                                            JSON.stringify(
+                                                dragAndDropQuestion.circles
+                                            )
+                                        )
+                                        data.append(
+                                            'part_nl',
+                                            dragAndDropQuestion.part_nl
+                                        )
+                                        data.append(
+                                            'questionImage',
+                                            dragAndDropQuestion.image
+                                        )
+                                        data.append(
+                                            'reason_nl',
+                                            dragAndDropQuestion.reason_nl
+                                        )
+                                        data.append('draggable', true)
                                         updateData(
                                             data,
                                             subscriber.enId,
@@ -1519,14 +1571,27 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                 {subscriber.part}
             </TableCell>
             <TableCell className="px-0 " align="left">
-                <img
-                    style={{ width: '70px', height: 'auto', aspectRatio: 1 }}
-                    src={
+                <a
+                    href={
                         'https://admin-alshahbarijschool.nl/' +
                         subscriber.questionImage
                     }
-                    alt="question"
-                />
+                    download
+                    target="_blank"
+                >
+                    <img
+                        style={{
+                            width: '70px',
+                            height: 'auto',
+                            aspectRatio: 1,
+                        }}
+                        src={
+                            'https://admin-alshahbarijschool.nl/' +
+                            subscriber.questionImage
+                        }
+                        alt="question"
+                    />
+                </a>
             </TableCell>
             <TableCell key={subscriber.id} className="px-0 " align="left">
                 {value.question}
