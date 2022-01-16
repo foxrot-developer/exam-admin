@@ -1612,7 +1612,15 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                 {value.reason}
             </TableCell>
             <TableCell className="px-0">
-                <IconButton onClick={() => removeUser(subscriber.id)}>
+                <IconButton
+                    onClick={() => {
+                        if (lang === 'en') {
+                            removeUser(subscriber.id)
+                        } else {
+                            removeUser(subscriber.enId)
+                        }
+                    }}
+                >
                     <Icon>delete</Icon>
                 </IconButton>
                 <IconButton

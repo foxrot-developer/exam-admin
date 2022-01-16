@@ -28,7 +28,7 @@ export const createFreeExam =
                 Toast.success('Exam created successfully')
                 dispatch(getFreeExam(lang))
             })
-            .catch((err) => console.log(err))
+            .catch((err) => Toast.error(err.response.data.message))
     }
 
 export const createImproveFreeExam = (exam) => (dispatch) => {
@@ -37,7 +37,7 @@ export const createImproveFreeExam = (exam) => (dispatch) => {
         .then((res) => {
             Toast.success('Exam created successfully')
         })
-        .catch((err) => console.log(err))
+        .catch((err) => Toast.error(err.response.data.message))
 }
 export const approveAllImportFreeExam = (formData) => (dispatch) => {
     axiosInstance
@@ -45,7 +45,7 @@ export const approveAllImportFreeExam = (formData) => (dispatch) => {
         .then(() => {
             Toast.success('Exam created successfully')
         })
-        .catch((err) => console.log(err))
+        .catch((err) => Toast.error(err.response.data.message))
 }
 
 export const approveAllImportPaidExam = (formData) => (dispatch) => {
@@ -54,7 +54,7 @@ export const approveAllImportPaidExam = (formData) => (dispatch) => {
         .then((res) => {
             Toast.success(res.data.message)
         })
-        .catch((err) => console.log(err))
+        .catch((err) => Toast.error(err.response.data.message))
 }
 
 export const isFreeExam = (lang, examId) => (dispatch) => {
@@ -66,7 +66,7 @@ export const isFreeExam = (lang, examId) => (dispatch) => {
         })
         .then((res) => {})
         .catch((err) => {
-            console.log(err)
+            Toast.error(err.response.data.message)
             dispatch({
                 type: GET_QUESTION,
                 payload: [],
@@ -89,7 +89,7 @@ export const getFreeExam = (lang) => (dispatch) => {
             })
         })
         .catch((err) => {
-            console.log(err)
+            Toast.error(err.response.data.message)
             dispatch({
                 type: GET_QUESTION,
                 payload: [],
@@ -105,7 +105,7 @@ export const updateFreeExam = (exam, id, setEditMode, lang) => (dispatch) => {
             Toast.success('Question updated successfully')
             dispatch(getFreeExam(lang))
         })
-        .catch((err) => console.log(err))
+        .catch((err) => Toast.error(err.response.data.message))
 }
 
 export const deleteFreeExam = (id, lang) => (dispatch) => {
@@ -116,7 +116,7 @@ export const deleteFreeExam = (id, lang) => (dispatch) => {
             Toast.success('Question deleted successfully')
             dispatch(getFreeExam(lang))
         })
-        .catch((err) => console.log(err))
+        .catch((err) => Toast.error(err.response.data.message))
 }
 
 export const createPaidExam = (exam, setOpen, lang) => (dispatch) => {
@@ -131,7 +131,7 @@ export const createPaidExam = (exam, setOpen, lang) => (dispatch) => {
                 dispatch(getPaidExam(lang))
             }
         })
-        .catch((err) => console.log(err))
+        .catch((err) => Toast.error(err.response.data.message))
 }
 export const createImportPaidExam = (exam) => (dispatch) => {
     axiosInstance
@@ -139,7 +139,7 @@ export const createImportPaidExam = (exam) => (dispatch) => {
         .then((res) => {
             Toast.success('Exam created successfully')
         })
-        .catch((err) => console.log(err))
+        .catch((err) => Toast.error(err.response.data.message))
 }
 
 export const getPaidExam = (lang) => (dispatch) => {
@@ -170,23 +170,23 @@ export const updatePaidExam = (id, exam, setEditMode, lang) => (dispatch) => {
                 lang: lang,
             },
         })
-        .then(() => {
-            Toast.success('Exam updated successfully')
+        .then((res) => {
+            Toast.success(res.data.message)
             setEditMode(false)
             dispatch(getPaidExam(lang))
         })
-        .catch((err) => console.log(err))
+        .catch((err) => Toast.error(err.response.data.message))
 }
 
 export const deletePaidExam = (id, lang) => (dispatch) => {
     console.log(id)
     axiosInstance
         .delete(`paid-exam/delete-paid-exam/${id}`)
-        .then(() => {
-            Toast.success('Exam deleted successfully')
+        .then((res) => {
+            Toast.success(res.data.message)
             dispatch(getPaidExam(lang))
         })
-        .catch((err) => console.log(err))
+        .catch((err) => Toast.error(err.response.data.message))
 }
 
 export const createPaidExamQuestion =
@@ -209,13 +209,16 @@ export const createPaidExamQuestion =
                     answer_nl: '',
                     part_nl: '',
                     circle: [],
+                    reason: '',
+                    reason_ar: '',
+                    reason_nl: '',
                     image: null,
                 })
                 setCircles([])
                 Toast.success('Question added successfully')
                 dispatch(getPaidQuestion(lang))
             })
-            .catch((err) => console.log(err))
+            .catch((err) => Toast.error(err.response.data.message))
     }
 
 export const getPaidExamQuestion = (id, lang) => (dispatch) => {
@@ -274,17 +277,17 @@ export const updatePaidQuestion =
                 Toast.success(res.data.message)
                 dispatch(getPaidQuestion(lang))
             })
-            .catch((err) => console.log(err.response.data.message))
+            .catch((err) => Toast.error(err.response.data.message))
     }
 
 export const deletePaidQuestion = (id, lang) => (dispatch) => {
     axiosInstance
         .delete(`paid-exam/delete-paid-exam-question/${id}`)
-        .then(() => {
-            Toast.success('Question deleted successfully')
+        .then((res) => {
+            Toast.success(res.data.message)
             dispatch(getPaidQuestion(lang))
         })
-        .catch((err) => console.log(err))
+        .catch((err) => Toast.error(err.response.data.message))
 }
 
 export const GET_EXAM_RESULT = 'GET_EXAM_RESULT'
@@ -323,5 +326,5 @@ export const makeFreeExam = (exam, setOpen, lang) => (dispatch) => {
                 dispatch(getPaidExam(lang))
             }
         })
-        .catch((err) => console.log(err))
+        .catch((err) => Toast.error(err.response.data.message))
 }
