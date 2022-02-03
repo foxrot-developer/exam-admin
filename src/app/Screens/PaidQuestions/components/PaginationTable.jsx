@@ -28,8 +28,8 @@ const PaginationTable = ({ data, lang }) => {
         setPage(0)
     }
 
-    const updateQuestion = (data, id, setEditMode) => {
-        dispatch(updatePaidQuestion(data, id, setEditMode, lang))
+    const updateQuestion = (examData, id, setEditMode) => {
+        dispatch(updatePaidQuestion(examData, id, setEditMode, lang))
     }
 
     const removeQuestion = (id) => {
