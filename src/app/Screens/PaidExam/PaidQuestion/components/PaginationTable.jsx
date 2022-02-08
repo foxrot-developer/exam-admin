@@ -10,7 +10,7 @@ import {
 import { useDispatch } from 'react-redux'
 import CustomTableCell from './CustomTableCell'
 
-const PaginationTable = ({ data }) => {
+const PaginationTable = ({ data, handleChange }) => {
     const [rowsPerPage, setRowsPerPage] = React.useState(30)
     const [page, setPage] = React.useState(0)
     const dispatch = useDispatch()
@@ -30,17 +30,19 @@ const PaginationTable = ({ data }) => {
 
     return (
         <div className="w-full " style={{ overflowX: 'auto' }}>
-            <Table style={{ minWidth: 700 }} className="whitespace-pre">
+            <Table style={{ minWidth: 1000 }} className="whitespace-pre">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Part</TableCell>
-                        <TableCell>Draggable</TableCell>
-                        <TableCell>Image</TableCell>
-                        <TableCell colSpan={2}>Question</TableCell>
-                        <TableCell>Option A </TableCell>
-                        <TableCell>Option B</TableCell>
-                        <TableCell>Option C</TableCell>
-                        <TableCell>Answer</TableCell>
+                        <TableCell width={100}>Part</TableCell>
+                        <TableCell width={100}>Draggable</TableCell>
+                        <TableCell width={150}>Image</TableCell>
+                        <TableCell width={500}>Question</TableCell>
+                        <TableCell width={200}>Option A </TableCell>
+                        <TableCell width={200}>Option B</TableCell>
+                        <TableCell width={200}>Option C</TableCell>
+                        <TableCell width={200}>Answer</TableCell>
+                        <TableCell width={500}>Reason</TableCell>
+                        <TableCell width={80}>Action</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -56,6 +58,7 @@ const PaginationTable = ({ data }) => {
                                         subscriber={subscriber}
                                         removeUser={removeQuestion}
                                         updateData={updateQuestion}
+                                        handleChange={handleChange}
                                     />
                                 </TableRow>
                             ))}

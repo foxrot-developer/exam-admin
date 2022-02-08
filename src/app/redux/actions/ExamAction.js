@@ -3,6 +3,7 @@ import axiosInstance from '../../../axios'
 export const GET_QUESTION = 'GET_QUESTION'
 export const GET_PAID_EXAM = 'GET_PAID_EXAM'
 export const EXAM_CLEAR = 'EXAM_CLEAR'
+export const GET_LANGUAGE_EXAMS = 'GET_LANGUAGE_EXAMS'
 
 export const createFreeExam =
     (exam, setOpen, setQuestion, lang) => (dispatch) => {
@@ -82,7 +83,6 @@ export const getFreeExam = (lang) => (dispatch) => {
             },
         })
         .then((res) => {
-            console.log(res.data)
             dispatch({
                 type: GET_QUESTION,
                 payload: res.data.free_questions,
@@ -109,7 +109,6 @@ export const updateFreeExam = (exam, id, setEditMode, lang) => (dispatch) => {
 }
 
 export const deleteFreeExam = (id, lang) => (dispatch) => {
-    console.log(id)
     axiosInstance
         .delete(`free-exam/delete-question/${id}`)
         .then(() => {
@@ -179,7 +178,6 @@ export const updatePaidExam = (id, exam, setEditMode, lang) => (dispatch) => {
 }
 
 export const deletePaidExam = (id, lang) => (dispatch) => {
-    console.log(id)
     axiosInstance
         .delete(`paid-exam/delete-paid-exam/${id}`)
         .then((res) => {
@@ -250,7 +248,6 @@ export const getPaidQuestion = (lang) => (dispatch) => {
             },
         })
         .then((res) => {
-            console.log(res.data)
             dispatch({
                 type: GET_QUESTION,
                 payload: res.data.paid_questions,
@@ -300,7 +297,6 @@ export const getAllPaidExamResult = (lang) => (dispatch) => {
             },
         })
         .then((res) => {
-            console.log(res.data)
             dispatch({
                 type: GET_EXAM_RESULT,
                 payload: res.data.results,
@@ -325,6 +321,33 @@ export const makeFreeExam = (exam, setOpen, lang) => (dispatch) => {
             } else {
                 dispatch(getPaidExam(lang))
             }
+        })
+        .catch((err) => Toast.error(err.response.data.message))
+}
+
+export const getAllLanguageExams = () => (dispatch) => {
+    axiosInstance.get('paid-exam/all-lang-questions').then((res) => {
+        console.log(res.data)
+        const { paid_questions_en, paid_questions_ar, paid_questions_nl } =
+            res.data
+        dispatch({
+            type: GET_LANGUAGE_EXAMS,
+            payload: {
+                english: paid_questions_en,
+                arabic: paid_questions_ar,
+                netherlands: paid_questions_nl,
+            },
+        })
+    })
+}
+
+export const getReplacedQuestion = (examId, data, setModal) => (dispatch) => {
+    axiosInstance
+        .patch(`paid-exam/replace-question/${examId}`, data)
+        .then((res) => {
+            setModal(false)
+            Toast.success(res.data.message)
+            dispatch(getPaidExamQuestion(examId, 'en'))
         })
         .catch((err) => Toast.error(err.response.data.message))
 }

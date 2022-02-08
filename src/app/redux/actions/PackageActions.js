@@ -10,7 +10,6 @@ export const getPackageList = (lang) => (dispatch) => {
             },
         })
         .then((res) => {
-            console.log(res.data)
             dispatch({
                 type: GET_ALL_PACKAGES,
                 payload: res.data.packages,
@@ -29,7 +28,6 @@ export const createPackage = (data, setOpen, lang) => (dispatch) => {
     axiosInstance
         .post('admin/create-package', data)
         .then((res) => {
-            console.log(res)
             setOpen(false)
             Toast.success('Package created successfully')
             dispatch(getPackageList(lang))
@@ -52,7 +50,6 @@ export const updatePackage = (id, data, setOpen, lang) => (dispatch) => {
 }
 
 export const packageStatus = (id, status, lang) => (dispatch) => {
-    console.log(id, status)
     axiosInstance
         .patch(`admin/active-package/${id}`, { active: status })
         .then(() => {

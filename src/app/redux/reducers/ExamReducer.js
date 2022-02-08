@@ -3,12 +3,18 @@ import {
     GET_PAID_EXAM,
     GET_EXAM_RESULT,
     EXAM_CLEAR,
+    GET_LANGUAGE_EXAMS,
 } from '../actions/ExamAction'
 
 const initialState = {
     questions: [],
     exam: [],
     result: [],
+    allLanguageExam: {
+        english: [],
+        arabic: [],
+        netherlands: [],
+    },
 }
 
 const ExamReducer = (state = initialState, action) => {
@@ -34,6 +40,11 @@ const ExamReducer = (state = initialState, action) => {
                 ...state,
                 exam: [],
                 result: [],
+            }
+        case GET_LANGUAGE_EXAMS:
+            return {
+                ...state,
+                allLanguageExam: action.payload,
             }
         default:
             return state

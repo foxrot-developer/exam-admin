@@ -46,7 +46,6 @@ const ExamResult = () => {
     const result = useSelector((state) => state.exam.result)
     const exam = useSelector((state) => state.exam.exam)
     const userList = useSelector((state) => state.user.userList)
-    console.log(userList)
     useEffect(() => {
         dispatch(getAllPaidExamResult('en'))
         dispatch(getUserList())
@@ -73,7 +72,6 @@ const ExamResult = () => {
                     part3_status: item.results.result.part_three.pass,
                 })
             )
-            console.log({ data })
             setFilterResult(data)
         }
     }, [exam, result, userList])

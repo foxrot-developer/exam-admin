@@ -7,17 +7,6 @@ import { Redirect, useLocation } from 'react-router-dom'
 // import AppContext from "app/appContext";
 import useAuth from 'app/hooks/useAuth'
 
-// const getUserRoleAuthStatus = (pathname, user, routes) => {
-//   const matched = routes.find((r) => r.path === pathname);
-
-//   const authenticated =
-//     matched && matched.auth && matched.auth.length
-//       ? matched.auth.includes(user.role)
-//       : true;
-//   console.log(matched, user);
-//   return authenticated;
-// };
-
 const AuthGuard = ({ children }) => {
     const {
         isAuthenticated,

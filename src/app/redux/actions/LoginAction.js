@@ -6,7 +6,6 @@ export const login = (data, history, setMessage, setLoading) => (dispatch) => {
     axiosInstance
         .post('admin/login', data)
         .then((res) => {
-            console.log(res.data)
             dispatch({
                 type: ADMIN_LOGIN,
                 payload: res.data,
@@ -24,7 +23,6 @@ export const login = (data, history, setMessage, setLoading) => (dispatch) => {
 export const updatePassword =
     ({ data, id, setMessage, setchangePassOpen }) =>
     (dispatch) => {
-        console.log(data, id)
         axiosInstance
             .patch(`admin/update-password/${id}`, data)
             .then((res) => {
@@ -39,7 +37,6 @@ export const updatePassword =
 export const updateProfile =
     ({ data, id, setOpen }) =>
     (dispatch) => {
-        console.log(data, id)
         axiosInstance
             .patch(`admin/update-profile/${id}`, data)
             .then((res) => {

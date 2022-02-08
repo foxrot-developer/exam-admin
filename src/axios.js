@@ -2,9 +2,10 @@ import axios from 'axios'
 import Toast from 'Toast'
 
 const axiosInstance = axios.create({
-    baseURL: 'https://admin-alshahbarijschool.nl/api/',
+    baseURL: 'https://examin-education.herokuapp.com/api/',
 })
-
+// https://examin-education.herokuapp.com/
+// https://admin-alshahbarijschool.nl/api/
 axiosInstance.interceptors.request.use((request) => {
     document.querySelector('.overlay').style.display = 'block'
     return request

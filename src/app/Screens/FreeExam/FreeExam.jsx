@@ -83,17 +83,6 @@ const FreeExam = () => {
             questions[0].part2 !== undefined &&
             questions[0].part3 !== undefined
         ) {
-            console.log(
-                [
-                    ...JSON.parse(questions[0].part1),
-                    ...JSON.parse(questions[0].part2),
-                    ...JSON.parse(questions[0].part3),
-                ],
-                JSON.parse(questions[0].part1).length,
-                JSON.parse(questions[0].part2).length,
-                JSON.parse(questions[0].part3).length
-            )
-
             setQuestion([
                 ...JSON.parse(questions[0].part1),
                 ...JSON.parse(questions[0].part2),
@@ -148,7 +137,6 @@ const FreeExam = () => {
                 data.append('draggable', question.draggable)
                 dispatch(createFreeExam(data, setOpen, setQuestion, lang))
             } else {
-                console.log({ dragAndDropQuestion })
                 data.append('question', dragAndDropQuestion.question)
                 data.append(
                     'options',

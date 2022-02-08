@@ -12,13 +12,19 @@ const useStyles = makeStyles((theme) => ({
         width: '90%',
     },
 }))
-const CustomTableCell = ({ subscriber, removeUser, updateData }) => {
+const CustomTableCell = ({
+    subscriber,
+    removeUser,
+    updateData,
+    handleChange,
+}) => {
     const classes = useStyles()
     const [value, setValue] = React.useState({
         question: subscriber.question,
         answer: subscriber.answer,
         options: JSON.parse(subscriber.options),
         part: subscriber.part,
+        reason: subscriber.reason,
     })
     const [error, setError] = React.useState({
         question: '',
@@ -67,7 +73,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData }) => {
                     alt="question"
                 />
             </TableCell>
-            <TableCell colSpan={2} className="px-0 " align="left">
+            <TableCell className="px-0 " align="left">
                 {isEditMode ? (
                     <TextField
                         required={true}
@@ -177,6 +183,21 @@ const CustomTableCell = ({ subscriber, removeUser, updateData }) => {
                 ) : (
                     value.answer
                 )}
+            </TableCell>
+            <TableCell className="px-0 " align="left">
+                {value.reason}
+            </TableCell>
+            <TableCell className="px-0 " align="left">
+                <IconButton
+                    onClick={() =>
+                        handleChange({
+                            part: value.part,
+                            questionId: subscriber._id,
+                        })
+                    }
+                >
+                    <Icon>published-with-changes-sharp</Icon>
+                </IconButton>
             </TableCell>
         </>
     )

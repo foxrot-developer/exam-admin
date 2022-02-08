@@ -126,12 +126,6 @@ const PaidExam = () => {
     }, [questions])
 
     const onExamCreate = () => {
-        console.log(
-            lang,
-            questionList.part1.length,
-            questionList.part2.length,
-            questionList.part3.length
-        )
         if (
             questionList.part1.length >= 25 &&
             questionList.part2.length >= 12 &&
