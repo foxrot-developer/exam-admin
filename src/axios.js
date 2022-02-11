@@ -2,7 +2,7 @@ import axios from 'axios'
 import Toast from 'Toast'
 
 const axiosInstance = axios.create({
-    baseURL: 'https://examin-education.herokuapp.com/api/',
+    baseURL: 'https://admin-alshahbarijschool.nl/api/',
 })
 // https://examin-education.herokuapp.com/
 // https://admin-alshahbarijschool.nl/api/
