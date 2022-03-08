@@ -84,7 +84,7 @@ const PaidExam = () => {
     }, [])
 
     const [questionList, setQuestionList] = React.useState({
-        3: [],
+        part1: [],
         part2: [],
         part3: [],
     })
@@ -97,7 +97,7 @@ const PaidExam = () => {
     useEffect(() => {
         if (allLanguageExam) {
             setQuestionList({
-                3: allLanguageExam.english.filter(
+                part1: allLanguageExam.english.filter(
                     (question) => question.part === 'part 1'
                 ),
                 part1_ar: allLanguageExam.arabic.filter(

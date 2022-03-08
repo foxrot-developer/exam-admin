@@ -857,7 +857,12 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                             data.append(
                                                 'questionImage',
                                                 question.image
-                                            )(data, subscriber.id, setOpen)
+                                            )
+                                            updateData(
+                                                data,
+                                                subscriber.id,
+                                                setOpen
+                                            )
                                         } else if (lang === 'ar') {
                                             const data = new FormData()
                                             data.append(
@@ -963,7 +968,12 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                             data.append(
                                                 'questionImage',
                                                 question.image
-                                            )(data, subscriber.id, setOpen)
+                                            )
+                                            updateData(
+                                                data,
+                                                subscriber.id,
+                                                setOpen
+                                            )
                                         } else if (lang === 'ar') {
                                             const data = new FormData()
                                             data.append(
@@ -1120,7 +1130,6 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                 </IconButton>
                 <IconButton
                     onClick={() => {
-                        alert(question.circles)
                         setOpen(true)
                     }}
                 >
