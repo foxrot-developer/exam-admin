@@ -349,5 +349,9 @@ export const getReplacedQuestion = (examId, data, setModal) => (dispatch) => {
             Toast.success(res.data.message)
             dispatch(getPaidExamQuestion(examId, 'en'))
         })
-        .catch((err) => Toast.error(err.response.data.message))
+        .catch((err) =>
+            err.response !== undefined
+                ? Toast.error(err.response.data.message)
+                : Toast.error('Something went wrong')
+        )
 }

@@ -468,7 +468,7 @@ const CustomTableCell = ({ subscriber, removeUser, updateData, lang }) => {
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    label="Age"
+                                    label="draggable"
                                     value={question.draggable}
                                     onChange={(e) => {
                                         setQuestion({

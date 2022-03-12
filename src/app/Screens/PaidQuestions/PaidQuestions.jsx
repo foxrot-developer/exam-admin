@@ -129,7 +129,7 @@ const PaidQuestion = () => {
     const dragDropnetherlandsPart = ['Deel 2', 'Deel 3']
     const [lang, setLang] = useState('en')
     useEffect(() => {
-        if (questions) {
+        if (questions.length > 0) {
             if (lang === '' || lang === 'en') {
                 setQuestionList({
                     part1: questions.filter(
